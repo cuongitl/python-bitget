@@ -1,4 +1,4 @@
-# Python bitget API Sample Code
+# Python bitget API Library
 
 
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/cuongitl/python-bitget/-/blob/main/LICENSE)
