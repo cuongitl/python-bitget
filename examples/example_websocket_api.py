@@ -1,4 +1,4 @@
-from pybitget.stream import BitgetWsClient, SubscribeReq,handel_error
+from pybitget.stream import BitgetWsClient, SubscribeReq, handel_error
 
 from pybitget.enums import *
 from pybitget import logger

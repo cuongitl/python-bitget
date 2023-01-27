@@ -47,7 +47,7 @@ print(result)
 ### Websocket Sample Code 
 
 ```python
-from pybitget.stream import BitgetWsClient, SubscribeReq,handel_error
+from pybitget.stream import BitgetWsClient, SubscribeReq, handel_error
 
 from pybitget.enums import *
 from pybitget import logger
@@ -93,12 +93,12 @@ Donations are greatly appreciated. If you prefer to donate any other currency pl
 
 * **BGB**:  `0x3ee4ca7cc911ad4e423dec2ae8f2846e9a6a0a77`  (ERC-20)
 
-[//]: # (## Communities)
-[//]: # (* Telegram: [Python Bitget API]&#40;https://t.me/ftx_api&#41;)
+## Communities
+* Telegram: [Python-bitget API](https://t.me/python_bitget)
 
 ## Release Notes
 The release notes can be found
-[here.](https://github.com/cuongitl/python-bitget/blob/main/release_notes.md)
+[here.](https://github.com/cuongitl/python-bitget/blob/master/release_notes.md)
 
 ## Contribution
 * Fork this repository.
