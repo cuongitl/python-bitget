@@ -22,8 +22,8 @@ If you're new to Bitget, use the following link to [save 10% on all of your trad
 * [Register an account with Bitget.](https://partner.bitget.com/bg/e55g05831674816745836)
 * [Generate an API Key and assign relevant permissions.](https://www.bitget.com/en/support/articles/360038968251-API%20Creation%20Guide)
 * [Bitget API docs](https://bitgetlimited.github.io/apidoc/en/mix/#welcome)
-  * [Example Bitget rest API](https://github.com/cuongitl/python-bitget/blob/main/example_rest_api.py)
-  * [Example Bitget websocket API](https://github.com/cuongitl/python-bitget/blob/main/example_websocket_api.py)
+  * [Example Bitget rest API](https://github.com/cuongitl/python-bitget/blob/master/examples/example_rest_api.py)
+  * [Example Bitget websocket API](https://github.com/cuongitl/python-bitget/blob/master/examples/example_websocket_api.py)
 
 # Install
     pip install python-bitget
