@@ -61,7 +61,7 @@ class BitgetWsClient:
         if ws_url is None:
             self.STREAM_URL = CONTRACT_WS_URL
         else:
-            self.STREAM_URL = CONTRACT_WS_URL
+            self.STREAM_URL = ws_url
         self.verbose = verbose
 
     def build(self):
