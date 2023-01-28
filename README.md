@@ -18,8 +18,8 @@ I am in no way affiliated with Bitget, use at your own risk.
 **If you think something is broken, something is missing or have any questions, please open an [Issue](https://github.com/cuongitl/python-bitget/issues)**
 
 # Get Started and Documentation
-If you're new to Bitget, use the following link to [get rewards up to $5005.](https://www.bitget.com/en/referral/register?from=referral&clacCode=6EKP94LE)
-* [Register an account with Bitget.](https://www.bitget.com/en/referral/register?from=referral&clacCode=6EKP94LE)
+If you're new to Bitget, use the following link to [save 10% on all of your trade fees, and can get rewards up to $5005.](https://www.bitget.com/en/referral/register?from=referral&clacCode=6EKP94LE)
+* [Register an account with Bitget.](https://partner.bitget.com/bg/e55g05831674816745836)
 * [Generate an API Key and assign relevant permissions.](https://www.bitget.com/en/support/articles/360038968251-API%20Creation%20Guide)
 * [Bitget API docs](https://bitgetlimited.github.io/apidoc/en/mix/#welcome)
   * [Example Bitget rest API](https://github.com/cuongitl/python-bitget/blob/main/example_rest_api.py)
