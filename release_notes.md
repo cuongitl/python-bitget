@@ -7,6 +7,21 @@ python wrapper with rest API, websocket API.
 # Release notes
 * Version 1.0.2 - 29 Jan 2023.
   * Full support mix-endpoints: market, account
+  * [x] [Get Depth](https://bitgetlimited.github.io/apidoc/en/mix/#get-depth)
+  * [x] [Get Single Symbol Ticker](https://bitgetlimited.github.io/apidoc/en/mix/#get-single-symbol-ticker)
+  * [x] [Get All Symbol Ticker](https://bitgetlimited.github.io/apidoc/en/mix/#get-all-symbol-ticker)
+  * [x] [Get Candle Data](https://bitgetlimited.github.io/apidoc/en/mix/#get-candle-data)
+  * [x] [Get Symbol Index Price](https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-index-price)
+  * [x] [Get Symbol Next Funding Time](https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-next-funding-time)
+  * [x] [Get History Funding Rate](https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate)
+  * [x] [Get Current Funding Rate](https://bitgetlimited.github.io/apidoc/en/mix/#get-current-funding-rate)
+  * [x] [Get sub Account Contract Assets](https://bitgetlimited.github.io/apidoc/en/mix/#get-sub-account-contract-assets)
+  * [x] [Get Open Count](https://bitgetlimited.github.io/apidoc/en/mix/#get-open-count)
+  * [x] [Change Margin](https://bitgetlimited.github.io/apidoc/en/mix/#change-margin)
+  * [x] [Change Hold Mode](https://bitgetlimited.github.io/apidoc/en/mix/#change-hold-mode)
+  * [x] [Get Account Bill](https://bitgetlimited.github.io/apidoc/en/mix/#get-account-bill)
+  * [x] [Get Business Account Bill](https://bitgetlimited.github.io/apidoc/en/mix/#get-business-account-bill)
+
 * Version 1.0.1 - 28 Jan 2023.
   * Add some examples
 * Version 1.0.0 - 27 Jan 2023. Supported:
