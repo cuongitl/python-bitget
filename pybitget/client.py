@@ -74,22 +74,7 @@ class Client(object):
         else:
             return ""
 
-    """ --- MarkettApi """
-
-    def mix_get_market_price(self, symbol):
-        """
-        Get Symbol Mark Price: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-mark-price
-        Limit rule: 20 times/1s (IP)
-        Required: symbol
-        :return:
-        """
-        params = {}
-        if symbol:
-            params["symbol"] = symbol
-            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/mark-price', params)
-        else:
-            logger.debug("pls check args")
-            return False
+    """ --- MIX-MarkettApi """
 
     def mix_get_symbols_info(self, productType):
         """
@@ -106,7 +91,213 @@ class Client(object):
             logger.debug("pls check args")
             return False
 
-    """ --- AccountApi """
+    def mix_get_depth(self, symbol, limit=100):
+        """
+        Get Depth: https://bitgetlimited.github.io/apidoc/en/mix/#get-depth
+
+        Limit rule: 20 times/1s (IP)
+
+        Required: symbol
+
+        :param symbol: Symbol Id (Must be capitalized)
+        :type symbol: str
+        :param limit: Depth gear 5，15，50，100 default 100
+        :type limit: str
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["limit"] = limit
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/depth', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_single_symbol_ticker(self, symbol):
+        """
+        Get Single Symbol Ticker: https://bitgetlimited.github.io/apidoc/en/mix/#get-single-symbol-ticker
+
+        Limit rule: 20 times/1s (IP)
+
+        Required: symbol
+
+        :param symbol: Symbol Id (Must be capitalized)
+        :type symbol: str
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/ticker', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_all_symbol_ticker(self, productType):
+        """
+        Get All Symbol Ticker: https://bitgetlimited.github.io/apidoc/en/mix/#get-all-symbol-ticker
+
+        Limit rule: 20 times/1s (IP)
+
+        Required: productType
+        :return:
+        """
+        params = {}
+        if productType:
+            params["productType"] = productType
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/tickers', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_fills(self, symbol, limit=100):
+        """
+        Get recent trades: https://bitgetlimited.github.io/apidoc/en/mix/#get-fills
+
+        Limit rule: 20 times/1s (IP)
+
+        Required: symbol, limit
+
+        :param symbol: Symbol Id (Must be capitalized)
+        :type symbol: str
+        :param limit: Default limit is 100
+        :type limit: str
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["limit"] = limit
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/fills', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_candles(self, symbol, granularity, startTime, endTime):
+        """
+        Get Candle Data: https://bitgetlimited.github.io/apidoc/en/mix/#get-candle-data
+        Limit rule: 20 times/1s (IP)
+        Required: symbol, granularity, startTime, endTime
+        :return:
+        """
+        params = {}
+        if symbol and granularity and startTime and endTime:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/candles', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_symbol_index_price(self, symbol):
+        """
+        Get Symbol Index Price: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-index-price
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/index', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_symbol_next_funding(self, symbol):
+        """
+        Get Symbol Next Funding Time: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-next-funding-time
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/funding-time', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_history_fund_rate(self, symbol, pageSize=20, pageNo=1, nextPage=False):
+        """
+        GGet History Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            params["nextPage"] = nextPage
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/history-fundRate', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_current_fund_rate(self, symbol):
+        """
+        Get Current Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-current-funding-rate
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/current-fundRate', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_open_interest(self, symbol):
+        """
+        Get Open Interest: https://bitgetlimited.github.io/apidoc/en/mix/#get-open-interest
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/open-interest', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_market_price(self, symbol):
+        """
+        Get Symbol Mark Price: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-mark-price
+        Limit rule: 20 times/1s (IP)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/mark-price', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_leverage(self, symbol):
+        """
+        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
+        Limit rule: 20/sec (IP)
+        Required: symbol.
+
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/symbol-leverage', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    """ --- MIX-AccountApi """
 
     def mix_get_account(self, symbol, marginCoin):
         """
@@ -137,24 +328,43 @@ class Client(object):
             logger.debug("pls check args")
             return False
 
-    def mix_get_leverage(self, symbol):
+    def mix_get_sub_account_contract_assets(self, productType):
         """
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
-        Limit rule: 20/sec (IP)
-        Required: symbol.
-
+        Get sub Account Contract Assets: https://bitgetlimited.github.io/apidoc/en/mix/#get-sub-account-contract-assets
+        Limit rule: 1 times/10s (uid)
+        Required: productType
+        :return:
         """
         params = {}
-        if symbol:
-            params["symbol"] = symbol
-            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/symbol-leverage', params)
+        if productType:
+            params['productType'] = productType
+            return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/sub-account-contract-assets', params)
         else:
             logger.debug("pls check args")
             return False
 
-    def mix_adjust_leverage(self, symbol, marginCoin, leverage, holdSide=''):
+    def mix_get_open_count(self, symbol, marginCoin, openPrice, openAmount, leverage=20):
         """
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#change-leverage
+        Get Open Count: https://bitgetlimited.github.io/apidoc/en/mix/#get-open-count
+        Limit rule: 20 times/1s (IP)
+        Required: symbol, marginCoin, openPrice, openAmount
+
+        """
+        params = {}
+        if symbol and marginCoin and openPrice and openAmount:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["openPrice"] = openPrice
+            params["openAmount"] = openAmount
+            params["leverage"] = leverage
+            return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/open-count', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_adjust_leverage(self, symbol, marginCoin, leverage, holdSide=None):
+        """
+        Change Leverage: https://bitgetlimited.github.io/apidoc/en/mix/#change-leverage
         Limit rule: 5 times/1s (uid)
         The leverage could set to different number in fixed margin mode(holdSide is required)
         Required: symbol, marginCoin, leverage
@@ -165,18 +375,36 @@ class Client(object):
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
             params["leverage"] = leverage
-            params["holdSide"] = holdSide
+            if holdSide is not None:
+                params["holdSide"] = holdSide
             return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setLeverage', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_adjust_margin(self, symbol, marginCoin, amount, holdSide=None):
+        """
+        Change Margin: https://bitgetlimited.github.io/apidoc/en/mix/#change-margin
+        Limit rule: 5 times/1s (uid)
+        Required: symbol, marginCoin, marginMode
+        """
+        params = {}
+        if symbol and marginCoin and amount:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["marginMode"] = amount
+            if holdSide is not None:
+                params["holdSide"] = holdSide
+            return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setMargin', params)
         else:
             logger.debug("pls check args")
             return False
 
     def mix_adjust_margintype(self, symbol, marginCoin, marginMode):
         """
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#change-margin-mode
+        Change Margin Mode: https://bitgetlimited.github.io/apidoc/en/mix/#change-margin-mode
         Limit rule: 5 times/1s (uid)
         Required: symbol, marginCoin, marginMode
-        - marginMode: fixed, crossed
         """
         params = {}
         if symbol and marginCoin and marginMode:
@@ -189,18 +417,27 @@ class Client(object):
             logger.debug("pls check args")
             return False
 
-    """ --- PositionApi """
-    '''
-    Obtain the user's single position information
-    :return:
-    '''
+    def mix_adjust_hold_mode(self, productType, holdMode):
+        """
+        Change Hold Mode: https://bitgetlimited.github.io/apidoc/en/mix/#change-hold-mode
+        Limit rule: 5 times/1s (uid)
+        Required: productType, holdMode
+        """
+        params = {}
+        if productType and holdMode:
+            params["productType"] = productType
+            params["holdMode"] = holdMode
+            return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setPositionMode', params)
+        else:
+            logger.debug("pls check args")
+            return False
 
     def mix_get_single_position(self, symbol, marginCoin=None):
         """
             Obtain the user's single position information.
-            Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-position
+            Get Symbol Position: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-position
 
-            :param symbol: Name of symbol pair e.g BNBBTC
+            :param symbol: Name of symbol
             :type symbol: str
             :param marginCoin: Margin currency (Must be capitalized)
             :type marginCoin: str
@@ -218,7 +455,8 @@ class Client(object):
 
     def mix_get_all_positions(self, productType, marginCoin=None):
         """
-        Obtain all position information of the user. Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-all-position
+        Obtain all position information of the user.
+        Get All Position: https://bitgetlimited.github.io/apidoc/en/mix/#get-all-position
 
         :param productType: Umcbl (USDT professional contract) dmcbl (mixed contract) sumcbl (USDT professional contract simulation disk) sdmcbl (mixed contract simulation disk)
         :type productType: str
@@ -232,6 +470,47 @@ class Client(object):
             if marginCoin is not None:
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_POSITION_V1_URL + '/allPosition', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_accountBill(self, symbol, marginCoin, startTime, endTime, lastEndId='', pageSize=20, next=False):
+        """
+        Get Account Bill: https://bitgetlimited.github.io/apidoc/en/mix/#get-account-bill
+        Limit rule: 10/sec (uid)
+        Required: symbol, marginCoin, startTime, endTime
+        :return:
+        """
+        params = {}
+        if symbol and marginCoin and startTime and endTime:
+            params['symbol'] = symbol
+            params['marginCoin'] = marginCoin
+            params['startTime'] = startTime
+            params['endTime'] = endTime
+            params['lastEndId'] = lastEndId
+            params['pageSize'] = pageSize
+            params['next'] = next
+            return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/accountBill', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_accountBusinessBill(self, productType, startTime, endTime, lastEndId='', pageSize=20, next=False):
+        """
+        Get Business Account Bill: https://bitgetlimited.github.io/apidoc/en/mix/#get-business-account-bill
+        Limit rule: 5/sec (uid)
+        Required: productType, startTime, endTime
+        :return:
+        """
+        params = {}
+        if productType and startTime and endTime:
+            params['productType'] = productType
+            params['startTime'] = startTime
+            params['endTime'] = endTime
+            params['lastEndId'] = lastEndId
+            params['pageSize'] = pageSize
+            params['next'] = next
+            return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/accountBusinessBill', params)
         else:
             logger.debug("pls check args")
             return False
@@ -284,29 +563,6 @@ class Client(object):
             if isPlan is not None:
                 params["isPlan"] = isPlan
             return self._request_with_params(GET, MIX_PLAN_V1_URL + '/currentPlan', params)
-        else:
-            logger.debug("pls check args")
-            return False
-
-    def mix_get_fills(self, symbol, limit=100):
-        """
-        Get recent trades: https://bitgetlimited.github.io/apidoc/en/mix/#get-fills
-
-        Limit rule: 20 times/1s (IP)
-
-        Required: symbol, limit
-
-        :param symbol: Symbol Id (Must be capitalized)
-        :type symbol: str
-        :param limit: Default limit is 100
-        :type limit: str
-        :return:
-        """
-        params = {}
-        if symbol:
-            params["symbol"] = symbol
-            params["limit"] = limit
-            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/fills', params)
         else:
             logger.debug("pls check args")
             return False
