@@ -5,6 +5,8 @@ python wrapper with rest API, websocket API.
 
 
 # Release notes
+* Version 1.0.1 - 29 Jan 2023.
+  * Add some examples
 * Version 1.0.0 - 28 Jan 2023. Supported:
     * [x] [Get Symbol Mark Price](https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-mark-price)
     * [x] [Get All Symbols](https://bitgetlimited.github.io/apidoc/en/mix/#get-all-symbols)
