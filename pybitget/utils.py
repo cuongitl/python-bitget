@@ -2,7 +2,8 @@ import hmac
 import base64
 import time
 from .enums import *
-
+import string
+import random
 
 def sign(message, secret_key):
     mac = hmac.new(bytes(secret_key, encoding='utf8'), bytes(message, encoding='utf-8'), digestmod='sha256')
@@ -44,3 +45,13 @@ def signature(timestamp, method, request_path, body, secret_key):
     mac = hmac.new(bytes(secret_key, encoding='utf8'), bytes(message, encoding='utf-8'), digestmod='sha256')
     d = mac.digest()
     return base64.b64encode(d)
+
+
+def id_random(size=3, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+def random_string(keyword=None, length=15):
+    if keyword is None:
+        keyword = 'Cuongitl'
+    return "{}_{}".format(keyword, id_random(length).lower())

@@ -238,7 +238,8 @@ class Client(object):
 
     def mix_get_current_orders(self, symbol):
         """
-        Get the current order
+        Get the current order.
+        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-open-order
         :return:
         """
         params = {}

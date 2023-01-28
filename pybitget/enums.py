@@ -121,8 +121,7 @@ WS_CHANNEL_INSTTYPE = "UMCBL"
 WS_CHANNEL_INSTID = "default"
 
 
-# ==========
-# === API define name
+# === API define fields name
 ORDER_STATUS = "state"
 ORDER_TYPE_NAME = "orderType"
 STOP_PRICE_FIELD = "triggerPrice"
