@@ -5,6 +5,8 @@ python wrapper with rest API, websocket API.
 
 
 # Release notes
+* Version 1.0.3 - 29 Jan 2023.
+  * Full support for all mix-endpoints.
 * Version 1.0.2 - 29 Jan 2023.
   * Full support mix-endpoints: market, account
   * [x] [Get Depth](https://bitgetlimited.github.io/apidoc/en/mix/#get-depth)

@@ -1041,7 +1041,7 @@ class Client(object):
         """
         Get History Plan Orders (TPSL): https://bitgetlimited.github.io/apidoc/en/mix/#get-history-plan-orders-tpsl
         Limit rule: 10 times/1s (uid)
-
+        Required: symbol, startTime, endTime
         :return:
         """
         params = {}
@@ -1061,3 +1061,204 @@ class Client(object):
             return False
 
     """ --- MIX-CopyTradeApi """
+
+    # https://bitgetlimited.github.io/apidoc/en/mix/#copytrade
+    # CopyTrade (cp)
+    def mix_get_cp_open_order(self, symbol, productType, pageSize=20, pageNo=1):
+        """
+        Get Trader Open order: https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-open-order
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, productType
+        :return:
+        """
+        params = {}
+        if symbol and productType:
+            params["symbol"] = symbol
+            params["productType"] = productType
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/currentTrack', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_follower_open_orders(self, symbol, productType, pageSize=20, pageNo=1):
+        """
+        Get Follower Open Orders: https://bitgetlimited.github.io/apidoc/en/mix/#get-follower-open-orders
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, productType
+        :return:
+        """
+        params = {}
+        if symbol and productType:
+            params["symbol"] = symbol
+            params["productType"] = productType
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/followerOrder', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_follower_history_orders(self, startTime, endTime, pageSize=20, pageNo=1):
+        """
+        Get Follower History Orders: https://bitgetlimited.github.io/apidoc/en/mix/#get-follower-history-orders
+        Limit rule: 10 times/1s (uid)
+        Required: startTime, endTime
+        :return:
+        """
+        params = {}
+        if startTime and endTime:
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/followerHistoryOrders', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cp_close_position(self, symbol, trackingNo):
+        """
+        Trader Close Position: https://bitgetlimited.github.io/apidoc/en/mix/#trader-close-position
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, trackingNo
+        :return:
+        """
+        params = {}
+        if symbol and trackingNo:
+            params["symbol"] = symbol
+            params["trackingNo"] = trackingNo
+            return self._request_with_params(POST, MIX_TRACE_V1_URL + '/closeTrackOrder', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cp_modify_tpsl(self, symbol, trackingNo, stopProfitPrice=0, stopLossPrice=0):
+        """
+        Trader Modify TPSL: https://bitgetlimited.github.io/apidoc/en/mix/#trader-modify-tpsl
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, trackingNo, stopProfitPrice or stopLossPrice
+        :return:
+        """
+        params = {}
+        if symbol and trackingNo and (stopProfitPrice != 0 or stopLossPrice != 0):
+            params["symbol"] = symbol
+            params["trackingNo"] = trackingNo
+            if stopProfitPrice != 0:
+                params["stopProfitPrice"] = stopProfitPrice
+            if stopLossPrice != 0:
+                params["stopLossPrice"] = stopLossPrice
+            return self._request_with_params(POST, MIX_TRACE_V1_URL + '/modifyTPSL', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_history_orders(self, startTime, endTime, pageSize=20, pageNo=1):
+        """
+        Get Traders History Orders: https://bitgetlimited.github.io/apidoc/en/mix/#get-traders-history-orders
+        Limit rule: 10 times/1s (uid)
+        Required: startTime, endTime
+        :return:
+        """
+        params = {}
+        if startTime and endTime:
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/historyTrack', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_profit_summary(self):
+        """
+        Get Trader Profit Summary: https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-profit-summary
+        Limit rule 20 times/1s (uid)
+        Required: None
+        :return:
+        """
+        return self._request_without_params(GET, MIX_TRACE_V1_URL + '/summary')
+
+    def mix_get_cp_profit_settle_margin_coin(self):
+        """
+        Get Trader History Profit Summary (according to settlement currency):
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-summary-according-to-settlement-currency
+        Limit rule 20 times/1s (uid)
+        Summary of traders' profit sharing (by settlement currency)
+        :return:
+        """
+        return self._request_without_params(GET, MIX_TRACE_V1_URL + '/profitSettleTokenIdGroup')
+
+    def mix_get_cp_profit_date_group(self, pageSize=20, pageNo=1):
+        """
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-summary-according-to-settlement-currency-and-date
+        Limit rule 20 times/1s (uid)
+        Summary of traders' profit sharing (by date)
+        :return:
+        """
+        params = {'pageSize': pageSize, 'pageNo': pageNo}
+        return self._request_with_params(GET, MIX_TRACE_V1_URL + '/profitDateGroupList', params)
+
+    def mix_get_cp_profit_date_detail(self, marginCoin, date, pageSize=20, pageNo=1):
+        """
+        Get Trader History Profit Detail
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-detail
+        Limit rule 20 times/1s (uid)
+        Historical profit distribution details of traders
+        :return:
+        """
+        params = {}
+        if marginCoin and date and pageSize and pageNo:
+            params["marginCoin"] = marginCoin
+            params["date"] = date
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/profitDateList', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_wait_profit_detail(self, pageSize=20, pageNo=1):
+        """
+        Get Trader History Profit Detail
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-detail
+        Limit rule 20 times/1s (uid)
+        Details of traders to be distributed
+        :return:
+        """
+        params = {}
+        if pageSize and pageNo:
+            params["pageSize"] = pageSize
+            params["pageNo"] = pageNo
+            return self._request_with_params(GET, MIX_TRACE_V1_URL + '/waitProfitDateList', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_cp_symbols(self):
+        """
+        Get CopyTrade Symbols
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-copytrade-symbols
+        Limit rule 20 times/1s (uid)
+        :return:
+        """
+        return self._request_without_params(GET, MIX_TRACE_V1_URL + '/traderSymbols')
+
+    def mix_cp_change_symbol(self, symbol, operation):
+        """
+        Trader Change CopyTrade symbol: https://bitgetlimited.github.io/apidoc/en/mix/#trader-change-copytrade-symbol
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, operation
+        :return:
+        """
+        params = {}
+        if symbol and operation:
+            params["symbol"] = symbol
+            params["operation"] = operation
+            return self._request_with_params(POST, MIX_TRACE_V1_URL + '/setUpCopySymbols', params)
+        else:
+            logger.debug("pls check args")
+            return False
+        
