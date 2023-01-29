@@ -515,10 +515,144 @@ class Client(object):
             logger.debug("pls check args")
             return False
 
-    def mix_get_current_orders(self, symbol):
+    """ --- MIX-tradeApi """
+
+    def mix_place_order(self, symbol, marginCoin, size, side, orderType,
+                        price='', clientOrderId=None, reduceOnly=False,
+                        timeInForceValue='normal', presetTakeProfitPrice='', presetStopLossPrice=''):
         """
-        Get the current order.
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-open-order
+        place an order: https://bitgetlimited.github.io/apidoc/en/mix/#place-order
+        Limit rule: 10 times/1s (uid)
+        Trader Limit rule: 1 times/1s (uid)
+
+        Required: symbol, marginCoin, size, price, side, orderType.
+
+        price: Mandatory in case of price limit
+        marginCoin: Deposit currency
+        size: It is quantity when the price is limited. The market price is the limit. The sales is the quantity
+        side：open_long open_short close_long close_short
+        orderType: limit(fixed price)  market(market price)
+        timeInForceValue: normal(Ordinary price limit order)   postOnly(It is only a maker. The market price is not allowed to use this)  ioc(Close immediately and cancel the remaining)  fok(Complete transaction or immediate cancellation)
+        presetTakeProfitPrice: Default stop profit price
+        presetStopLossPrice：Preset stop loss price
+        :return:
+        """
+        params = {}
+        if symbol and marginCoin and side and orderType and size:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["price"] = price
+            params["size"] = size
+            params["side"] = side
+            params["orderType"] = orderType
+            params["reduceOnly"] = reduceOnly
+            params["timeInForceValue"] = timeInForceValue
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            params["presetTakeProfitPrice"] = presetTakeProfitPrice
+            params["presetStopLossPrice"] = presetStopLossPrice
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/placeOrder', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_reversal(self, symbol, marginCoin, side, orderType,
+                     size=None, clientOrderId=None, timeInForceValue='normal', reverse=False):
+        """
+        Reversal: https://bitgetlimited.github.io/apidoc/en/mix/#reversal
+        Limit rule: 10 times/1s (uid), counted together with placeOrder
+        Reversal share the same interface with Place order.
+
+        Required: symbol, marginCoin, side, orderType
+
+        :return:
+        """
+        params = {}
+        if symbol and marginCoin and side and orderType:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["side"] = side
+            params["orderType"] = orderType
+            if size is not None:
+                params["size"] = size
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            params["timeInForceValue"] = timeInForceValue
+            params["reverse"] = reverse
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/placeOrder', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_batch_orders(self, symbol, marginCoin, orderDataList):
+        """
+        https://bitgetlimited.github.io/apidoc/en/mix/#batch-order
+        Limit rule: 10 times/1s (uid)
+        Trader Limit rule: 1 times/1s (uid)
+        Required: symbol, marginCoin, orderDataList
+        """
+        params = {}
+        if symbol and marginCoin and orderDataList:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["orderDataList"] = orderDataList
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/batch-orders', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cancel_order(self, symbol, marginCoin, orderId):
+        """
+        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, marginCoin, orderId
+        """
+        params = {}
+        if symbol and marginCoin and orderId:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["orderId"] = orderId
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-order', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_batch_cancel_orders(self, symbol, marginCoin, orderIds):
+        """
+        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, marginCoin, orderIds
+        """
+        params = {}
+        if symbol and marginCoin and orderIds:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["orderIds"] = orderIds
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-batch-orders', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cancel_all_orders(self, productType, marginCoin):
+        """
+        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-all-order
+        Limit rule: 10 times/1s (uid)
+
+        Required: productType, marginCoin
+        """
+        params = {}
+        if productType and orderId:
+            params["productType"] = productType
+            params["marginCoin"] = marginCoin
+            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-all-orders', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_open_order(self, symbol):
+        """
+        Get the current order: https://bitgetlimited.github.io/apidoc/en/mix/#get-open-order
+        Required: symbol
         :return:
         """
         params = {}
@@ -532,7 +666,7 @@ class Client(object):
     def mix_get_all_open_orders(self, productType, marginCoin=None):
         """
         Get All Open Order:::https://bitgetlimited.github.io/apidoc/en/mix/#get-all-open-order
-
+        Required: productType
         :return:
         """
         params = {}
@@ -541,28 +675,6 @@ class Client(object):
             if marginCoin:
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/marginCoinCurrent', params)
-        else:
-            logger.debug("pls check args")
-            return False
-
-    def mix_get_current_plan(self, symbol=None, productType=None, isPlan=None):
-        """
-        Get Plan Order (TPSL) List:https://bitgetlimited.github.io/apidoc/en/mix/#get-plan-order-tpsl-list
-        can get orders without symbol parameter.
-        But either or both of symbol and productType have to be set as request parameters.
-        Required: symbol or productType
-        isPlan: plan/profit_loss
-        :return:
-        """
-        params = {}
-        if symbol is not None or productType is not None:
-            if symbol is not None:
-                params["symbol"] = symbol
-            if productType is not None:
-                params["productType"] = productType
-            if isPlan is not None:
-                params["isPlan"] = isPlan
-            return self._request_with_params(GET, MIX_PLAN_V1_URL + '/currentPlan', params)
         else:
             logger.debug("pls check args")
             return False
@@ -590,7 +702,7 @@ class Client(object):
         :return:
         """
         params = {}
-        if symbol:
+        if symbol and startTime and endTime and pageSize:
             params["symbol"] = symbol
             params["startTime"] = startTime
             params["endTime"] = endTime
@@ -625,7 +737,7 @@ class Client(object):
         :return:
         """
         params = {}
-        if productType:
+        if productType and startTime and endTime and pageSize:
             params["productType"] = productType
             params["startTime"] = startTime
             params["endTime"] = endTime
@@ -637,97 +749,200 @@ class Client(object):
             logger.debug("pls check args")
             return False
 
-    # OrderApi - Trade
-    def mix_place_order(self, symbol, marginCoin, size, side, orderType,
-                        price='', clientOrderId='', reduceOnly=False,
-                        timeInForceValue='normal', presetTakeProfitPrice='', presetStopLossPrice=''):
+    def mix_get_order_details(self, symbol, orderId=None, clientOrderId=None):
         """
-        place an order: https://bitgetlimited.github.io/apidoc/en/mix/#place-order
-        Limit rule: 10 times/1s (uid)
-        Trader Limit rule: 1 times/1s (uid)
-
-        Required: symbol, marginCoin, size, price, side, orderType.
-
-        price: Mandatory in case of price limit
-        marginCoin: Deposit currency
-        size: It is quantity when the price is limited. The market price is the limit. The sales is the quantity
-        side：open_long open_short close_long close_short
-        orderType: limit(fixed price)  market(market price)
-        timeInForceValue: normal(Ordinary price limit order)   postOnly(It is only a maker. The market price is not allowed to use this)  ioc(Close immediately and cancel the remaining)  fok(Complete transaction or immediate cancellation)
-        presetTakeProfitPrice: Default stop profit price
-        presetStopLossPrice：Preset stop loss price
+        Get Order Details: https://bitgetlimited.github.io/apidoc/en/mix/#get-order-details
+        Limit rule: 20 times/2s (uid)
+        Required: symbol
         :return:
         """
         params = {}
-        if symbol and marginCoin and side and orderType and marginCoin:
+        if symbol:
+            params["symbol"] = symbol
+            if orderId is not None:
+                params["orderId"] = orderId
+            if clientOrderId is not None:
+                params["clientOrderId"] = orderId
+            return self._request_with_params(GET, MIX_ORDER_V1_URL + '/detail', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_order_fill_detail(self, symbol, orderId=None, startTime=None, endTime=None, lastEndId=None):
+        """
+        Get Order fill detail: https://bitgetlimited.github.io/apidoc/en/mix/#get-order-fill-detail
+        Limit rule: 20 times/2s (uid)
+        Required: symbol
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            if orderId is not None:
+                params["orderId"] = orderId
+            if startTime is not None:
+                params["startTime"] = startTime
+            if endTime is not None:
+                params["endTime"] = endTime
+            if lastEndId is not None:
+                params["lastEndId"] = lastEndId
+            return self._request_with_params(GET, MIX_ORDER_V1_URL + '/fills', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_productType_order_fill_detail(self, productType, startTime=None, endTime=None, lastEndId=None):
+        """
+        Get ProductType Order fill detail: https://bitgetlimited.github.io/apidoc/en/mix/#get-producttype-order-fill-detail
+        Limit rule: 10 times/1s (uid)
+        Required: productType
+        :return:
+        """
+        params = {}
+        if productType:
+            params["productType"] = productType
+            if startTime is not None:
+                params["startTime"] = startTime
+            if endTime is not None:
+                params["endTime"] = endTime
+            if lastEndId is not None:
+                params["lastEndId"] = lastEndId
+            return self._request_with_params(GET, MIX_ORDER_V1_URL + '/allFills', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_place_plan_order(self, symbol, marginCoin, size, side, orderType, triggerPrice, triggerType
+                             , executePrice=None, clientOrderId=None, presetTakeProfitPrice=None, presetStopLossPrice=None):
+        """
+        Place Plan order: https://bitgetlimited.github.io/apidoc/en/mix/#place-plan-order
+        Limit rule: 10 times/1s (uid)
+
+        Required: symbol, marginCoin, size, side, orderType, triggerPrice, triggerType
+        :return:
+        """
+        params = {}
+        if symbol and marginCoin and side and size and orderType and triggerPrice and triggerType:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
-            params["price"] = price
             params["size"] = size
             params["side"] = side
             params["orderType"] = orderType
-            params["reduceOnly"] = reduceOnly
-            params["timeInForceValue"] = timeInForceValue
-            params["clientOid"] = clientOrderId
-            params["presetTakeProfitPrice"] = presetTakeProfitPrice
-            params["presetStopLossPrice"] = presetStopLossPrice
-            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/placeOrder', params)
+            params["triggerPrice"] = triggerPrice
+            params["triggerType"] = triggerType
+            if executePrice is not None:
+                params["executePrice"] = executePrice
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            if presetTakeProfitPrice is not None:
+                params["presetTakeProfitPrice"] = presetTakeProfitPrice
+            if presetStopLossPrice is not None:
+                params["presetStopLossPrice"] = presetStopLossPrice
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placePlan', params)
         else:
             logger.debug("pls check args")
             return False
 
-    def mix_cancel_all_orders(self, productType, marginCoin):
+    def mix_modify_plan_order(self, symbol, marginCoin, orderId, orderType, triggerPrice, triggerType
+                              , executePrice=None):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-all-order
+        Modify Plan Order: https://bitgetlimited.github.io/apidoc/en/mix/#modify-plan-order
         Limit rule: 10 times/1s (uid)
 
-        Required: productType, marginCoin
+        Required: symbol, marginCoin, orderId, orderType, triggerPrice, triggerType
+        :return:
         """
         params = {}
-        if productType and orderId:
-            params["productType"] = productType
+        if symbol and marginCoin and orderId and orderType and triggerPrice and triggerType:
+            params["symbol"] = symbol
             params["marginCoin"] = marginCoin
-            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-all-orders', params)
+            params["orderId"] = orderId
+            params["orderType"] = orderType
+            params["triggerPrice"] = triggerPrice
+            params["triggerType"] = triggerType
+            if executePrice is not None:
+                params["executePrice"] = executePrice
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyPlan', params)
         else:
             logger.debug("pls check args")
             return False
 
-    def mix_cancel_order(self, symbol, marginCoin, orderId):
+    def mix_modify_plan_order_tpsl(self, symbol, marginCoin, orderId
+                                   , presetTakeProfitPrice=None, presetStopLossPrice=None):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        Modify Plan Order TPSL: https://bitgetlimited.github.io/apidoc/en/mix/#modify-plan-order-tpsl
         Limit rule: 10 times/1s (uid)
+
         Required: symbol, marginCoin, orderId
+        :return:
         """
         params = {}
         if symbol and marginCoin and orderId:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
             params["orderId"] = orderId
-            return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-order', params)
+            if presetTakeProfitPrice is not None:
+                params["presetTakeProfitPrice"] = presetTakeProfitPrice
+            if presetStopLossPrice is not None:
+                params["presetStopLossPrice"] = presetStopLossPrice
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyPlanPreset', params)
         else:
             logger.debug("pls check args")
             return False
 
-    def mix_cancel_plan_order(self, symbol, marginCoin, orderId, planType):
+    def mix_place_stop_order(self, symbol, marginCoin, triggerPrice, planType, holdSide,
+                             triggerType='fill_price', size=None, rangeRate=None):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-plan-order-tpsl
-        Required: symbol, marginCoin, orderId, planType
+        Place Stop Order: https://bitgetlimited.github.io/apidoc/en/mix/#place-stop-order
         Limit rule: 10 times/1s (uid)
+
+        Required: symbol, marginCoin, triggerPrice, planType, holdSide
+        :return:
         """
         params = {}
-        if symbol and marginCoin and orderId and planType:
+        if symbol and marginCoin and planType and holdSide and triggerPrice:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
-            params["orderId"] = orderId
             params["planType"] = planType
-            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelPlan', params)
+            params["holdSide"] = holdSide
+            params["triggerPrice"] = triggerPrice
+            params["triggerType"] = triggerType
+            if size is not None:
+                params["size"] = size
+            if rangeRate is not None:
+                params["rangeRate"] = rangeRate
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placeTPSL', params)
         else:
             logger.debug("pls check args")
             return False
 
-    # PlanApi - Trade
+    def mix_place_trailing_stop_order(self, symbol, marginCoin, triggerPrice, side,
+                                      triggerType=None, size=None, rangeRate=None):
+        """
+        Place Trailing Stop Order: https://bitgetlimited.github.io/apidoc/en/mix/#place-trailing-stop-order
+        Limit rule: 10 times/1s (uid)
 
-    def mix_place_PositionsTPSL(self, symbol, marginCoin, planType, triggerPrice, triggerType, holdSide=''):
+        Required: symbol, marginCoin, triggerPrice, side
+        :return:
+        """
+        params = {}
+        if symbol and marginCoin and side and triggerPrice:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["side"] = side
+            params["triggerPrice"] = triggerPrice
+            if triggerType is not None:
+                params["triggerType"] = triggerType
+            if size is not None:
+                params["size"] = size
+            if rangeRate is not None:
+                params["rangeRate"] = rangeRate
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placeTrailStop', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_place_PositionsTPSL(self, symbol, marginCoin, planType, triggerPrice, triggerType, holdSide=None):
         """
         Place Position TPSL: https://bitgetlimited.github.io/apidoc/en/mix/#place-position-tpsl
         Limit rule: 10 times/1s (uid)
@@ -742,8 +957,107 @@ class Client(object):
             params["planType"] = planType
             params["triggerPrice"] = triggerPrice
             params["triggerType"] = triggerType
-            params["holdSide"] = holdSide
+            if holdSide is not None:
+                params["holdSide"] = holdSide
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placePositionsTPSL', params)
         else:
             logger.debug("pls check args")
             return False
+
+    def mix_modify_stop_order(self, symbol, marginCoin, orderId, triggerPrice, planType=None):
+        """
+        Modify Stop Order: https://bitgetlimited.github.io/apidoc/en/mix/#modify-stop-order
+        Limit rule: 10 times/1s (uid)
+        Required: symbol, marginCoin, orderId, triggerPrice
+        """
+        params = {}
+        if symbol and marginCoin and orderId and triggerPrice:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["triggerPrice"] = triggerPrice
+            if planType is not None:
+                params["planType"] = planType
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyTPSLPlan', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cancel_plan_order(self, symbol, marginCoin, orderId, planType):
+        """
+        Cancel Plan Order (TPSL): https://bitgetlimited.github.io/apidoc/en/mix/#cancel-plan-order-tpsl
+        Required: symbol, marginCoin, orderId, planType
+        Limit rule: 10 times/1s (uid)
+        """
+        params = {}
+        if symbol and marginCoin and orderId and planType:
+            params["symbol"] = symbol
+            params["marginCoin"] = marginCoin
+            params["orderId"] = orderId
+            params["planType"] = planType
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelPlan', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_cancel_all_trigger_orders(self, productType, planType):
+        """
+        Cancel All trigger Order (TPSL): https://bitgetlimited.github.io/apidoc/en/mix/#cancel-all-trigger-order-tpsl
+        Required: productType, planType
+        Limit rule: 10 times/1s (uid)
+        """
+        params = {}
+        if productType and planType:
+            params["productType"] = productType
+            params["planType"] = planType
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelAllPlan', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_plan_order_tpsl(self, symbol=None, productType=None, isPlan=None):
+        """
+        Get Plan Order (TPSL) List:https://bitgetlimited.github.io/apidoc/en/mix/#get-plan-order-tpsl-list
+        can get orders without symbol parameter.
+        But either or both of symbol and productType have to be set as request parameters.
+        Required: symbol or productType
+        isPlan: plan/profit_loss
+        Limit rule: 10 times/1s (uid)
+        :return:
+        """
+        params = {}
+        if symbol is not None or productType is not None:
+            if symbol is not None:
+                params["symbol"] = symbol
+            if productType is not None:
+                params["productType"] = productType
+            if isPlan is not None:
+                params["isPlan"] = isPlan
+            return self._request_with_params(GET, MIX_PLAN_V1_URL + '/currentPlan', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    def mix_get_history_plan_orders(self, symbol, startTime, endTime, pageSize=100, lastEndId=None, isPre=False, isPlan=None):
+        """
+        Get History Plan Orders (TPSL): https://bitgetlimited.github.io/apidoc/en/mix/#get-history-plan-orders-tpsl
+        Limit rule: 10 times/1s (uid)
+
+        :return:
+        """
+        params = {}
+        if symbol and startTime and endTime:
+            params["symbol"] = symbol
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageSize"] = pageSize
+            params["isPre"] = isPre
+            if lastEndId is not None:
+                params["lastEndId"] = lastEndId
+            if isPlan is not None:
+                params["isPlan"] = isPlan
+            return self._request_with_params(GET, MIX_PLAN_V1_URL + '/historyPlan', params)
+        else:
+            logger.debug("pls check args")
+            return False
+
+    """ --- MIX-CopyTradeApi """
