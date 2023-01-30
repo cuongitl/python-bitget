@@ -6,7 +6,8 @@ python wrapper with rest API, websocket API.
 
 # Release notes
 * Version 1.0.4 - 30 Jan 2023.
-  * Full support for all spot-endpoints.
+  * Full support for all api-endpoint: spot/mix/broker
+  * Update some functions by [Bitget Update log](https://bitgetlimited.github.io/apidoc/en/mix/#update-log)
 * Version 1.0.3 - 29 Jan 2023.
   * Full support for all mix-endpoints.
 * Version 1.0.2 - 29 Jan 2023.

@@ -814,7 +814,7 @@ class Client(object):
             return False
 
     def mix_place_plan_order(self, symbol, marginCoin, size, side, orderType, triggerPrice, triggerType
-                             , executePrice=None, clientOrderId=None, presetTakeProfitPrice=None, presetStopLossPrice=None):
+                             , executePrice=None, clientOrderId=None, presetTakeProfitPrice=None, presetStopLossPrice=None, reduceOnly=False):
         """
         Place Plan order: https://bitgetlimited.github.io/apidoc/en/mix/#place-plan-order
         Limit rule: 10 times/1s (uid)
@@ -831,6 +831,7 @@ class Client(object):
             params["orderType"] = orderType
             params["triggerPrice"] = triggerPrice
             params["triggerType"] = triggerType
+            params["reduceOnly"] = reduceOnly
             if executePrice is not None:
                 params["executePrice"] = executePrice
             if clientOrderId is not None:
@@ -965,19 +966,18 @@ class Client(object):
             logger.error("pls check args")
             return False
 
-    def mix_modify_stop_order(self, symbol, marginCoin, orderId, triggerPrice, planType=None):
+    def mix_modify_stop_order(self, symbol, marginCoin, orderId, triggerPrice, planType):
         """
         Modify Stop Order: https://bitgetlimited.github.io/apidoc/en/mix/#modify-stop-order
         Limit rule: 10 times/1s (uid)
-        Required: symbol, marginCoin, orderId, triggerPrice
+        Required: symbol, marginCoin, orderId, triggerPrice, planType
         """
         params = {}
-        if symbol and marginCoin and orderId and triggerPrice:
+        if symbol and marginCoin and orderId and triggerPrice and planType:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
             params["triggerPrice"] = triggerPrice
-            if planType is not None:
-                params["planType"] = planType
+            params["planType"] = planType
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyTPSLPlan', params)
         else:
             logger.error("pls check args")
@@ -1135,20 +1135,25 @@ class Client(object):
             logger.error("pls check args")
             return False
 
-    def mix_cp_modify_tpsl(self, symbol, trackingNo, stopProfitPrice=0, stopLossPrice=0):
+    def mix_cp_modify_tpsl(self, symbol, trackingNo, stopProfitPrice=None, stopLossPrice=None):
         """
         Trader Modify TPSL: https://bitgetlimited.github.io/apidoc/en/mix/#trader-modify-tpsl
         Limit rule: 10 times/1s (uid)
-        Required: symbol, trackingNo, stopProfitPrice or stopLossPrice
+        Required: symbol, trackingNo
+
+        :stopProfitPrice set to null means to disable/cancel TP
+
+        :stopLossPrice set to null means to disable/cancel SL
+
         :return:
         """
         params = {}
-        if symbol and trackingNo and (stopProfitPrice != 0 or stopLossPrice != 0):
+        if symbol and trackingNo:
             params["symbol"] = symbol
             params["trackingNo"] = trackingNo
-            if stopProfitPrice != 0:
+            if stopProfitPrice is not None:
                 params["stopProfitPrice"] = stopProfitPrice
-            if stopLossPrice != 0:
+            if stopLossPrice is not None:
                 params["stopLossPrice"] = stopLossPrice
             return self._request_with_params(POST, MIX_TRACE_V1_URL + '/modifyTPSL', params)
         else:
@@ -1964,5 +1969,197 @@ class Client(object):
             logger.error("pls check args")
             return False
 
-    """ Broker-Sub-Account-Interface"""
     """ Broker-Sub-API-Interface"""
+
+    def broker_sub_create_api(self, subUid, passphrase, remark, ip, perm):
+        """ Create Sub ApiKey (Only Broker) : https://bitgetlimited.github.io/apidoc/en/broker/#create-sub-apikey-only-broker
+
+        Limit rule：10/sec (uid)
+
+        broker create sub apikey
+
+        :return:
+        """
+        params = {}
+        if subUid and passphrase and perm:
+            params["subUid"] = subUid
+            params["passphrase"] = passphrase
+            params["remark"] = remark
+            params["ip"] = ip
+            params["perm"] = perm
+            return self._request_with_params(POST, BROKER_MANAGE_V1_URL + '/sub-api-create', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_api_list(self, subUid):
+        """ Get Sub ApiKey List : https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-apikey-list
+
+        Limit rule：10/sec (uid)
+
+
+        :return:
+        """
+        params = {}
+        if subUid:
+            params["subUid"] = subUid
+            return self._request_with_params(GET, BROKER_MANAGE_V1_URL + '/sub-api-list', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_sub_modify_api(self, subUid, apikey, remark=None, ip=None, perm=None):
+        """ Modify Sub ApiKey (Only Broker) : https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-apikey-only-broker
+
+        Limit rule：10/sec (uid)
+
+        :return:
+        """
+        params = {}
+        if subUid and apikey:
+            params["subUid"] = subUid
+            params["apikey"] = apikey
+            if remark is not None:
+                params["remark"] = remark
+            if ip is not None:
+                params["ip"] = ip
+            if perm is not None:
+                params["perm"] = perm
+            return self._request_with_params(POST, BROKER_MANAGE_V1_URL + '/sub-api-modify', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    """ Broker-Sub-Account-Interface"""
+
+    def broker_get_info(self):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-broker-info """
+        return self._request_without_params(GET, BROKER_ACCOUNT_V1_URL + '/info')
+
+    def broker_sub_create(self, subName, remark=None):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#create-sub-account """
+        params = {}
+        if subName:
+            params["subName"] = subName
+            if remark is not None:
+                params["remark"] = remark
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-create', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_list(self, pageSize=10, lastEndId=None, status=None):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-list """
+        params = {}
+        if pageSize:
+            params["pageSize"] = pageSize
+            if lastEndId is not None:
+                params["lastEndId"] = lastEndId
+            if status is not None:
+                params["status"] = status
+            return self._request_with_params(GET, BROKER_ACCOUNT_V1_URL + '/sub-list', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_sub_modify_account(self, subUid, perm, status):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-account """
+        params = {}
+        if subUid and perm and status:
+            params["subUid"] = subUid
+            params["perm"] = perm
+            params["status"] = status
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-modify', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_sub_modify_email(self, subUid, subEmail):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-email """
+        params = {}
+        if subUid and subEmail:
+            params["subUid"] = subUid
+            params["subEmail"] = subEmail
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-modify-email', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_email(self, subUid):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-email """
+        params = {}
+        if subUid:
+            params["subUid"] = subUid
+            return self._request_with_params(GET, BROKER_ACCOUNT_V1_URL + '/sub-email', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_spot_assets(self, subUid):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-spot-assets """
+        params = {}
+        if subUid:
+            params["subUid"] = subUid
+            return self._request_with_params(GET, BROKER_ACCOUNT_V1_URL + '/sub-spot-assets', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_future_assets(self, subUid, productType):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-future-assets """
+        params = {}
+        if subUid and productType:
+            params["subUid"] = subUid
+            params["productType"] = productType
+            return self._request_with_params(GET, BROKER_ACCOUNT_V1_URL + '/sub-future-assets', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_get_sub_deposit_address(self, subUid, coin, chain=None):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-deposit-address-only-broker """
+        params = {}
+        if subUid and coin:
+            params["subUid"] = subUid
+            params["coin"] = coin
+            if chain is not None:
+                params["chain"] = chain
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-address', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_sub_withdrawal(self, subUid, coin, address, chain, amount,
+                              tag=None, clientOrderId=None, remark=None):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#sub-withdrawal-only-broker """
+        params = {}
+        if subUid and coin and chain and address and amount:
+            params["subUid"] = subUid
+            params["coin"] = coin
+            params["chain"] = chain
+            params["address"] = address
+            params["amount"] = amount
+            if tag is not None:
+                params["tag"] = tag
+            if remark is not None:
+                params["remark"] = remark
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-withdrawal', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def broker_sub_auto_transfer(self, subUid, coin, toAccountType):
+        """ https://bitgetlimited.github.io/apidoc/en/broker/#sub-deposit-auto-transfer-only-broker """
+        params = {}
+        if subUid and coin and toAccountType:
+            params["subUid"] = subUid
+            params["coin"] = coin
+            params["toAccountType"] = toAccountType
+            return self._request_with_params(POST, BROKER_ACCOUNT_V1_URL + '/sub-auto-transfer', params)
+        else:
+            logger.error("pls check args")
+            return False
