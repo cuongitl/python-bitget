@@ -8,12 +8,13 @@ from pybitget import logger
 
 class Client(object):
 
-    def __init__(self, api_key, api_secret_key, passphrase, use_server_time=False):
+    def __init__(self, api_key, api_secret_key, passphrase, use_server_time=False, verbose=False):
 
         self.API_KEY = api_key
         self.API_SECRET_KEY = api_secret_key
         self.PASSPHRASE = passphrase
         self.use_server_time = use_server_time
+        self.verbose = verbose
 
     def _request(self, method, request_path, params, cursor=False):
         if method == GET:
@@ -88,7 +89,7 @@ class Client(object):
             params["productType"] = productType
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/contracts', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_depth(self, symbol, limit=100):
@@ -111,7 +112,7 @@ class Client(object):
             params["limit"] = limit
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/depth', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_single_symbol_ticker(self, symbol):
@@ -131,7 +132,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/ticker', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_all_symbol_ticker(self, productType):
@@ -148,7 +149,7 @@ class Client(object):
             params["productType"] = productType
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/tickers', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_fills(self, symbol, limit=100):
@@ -171,7 +172,7 @@ class Client(object):
             params["limit"] = limit
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/fills', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_candles(self, symbol, granularity, startTime, endTime):
@@ -186,7 +187,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/candles', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_symbol_index_price(self, symbol):
@@ -201,7 +202,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/index', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_symbol_next_funding(self, symbol):
@@ -216,7 +217,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/funding-time', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_history_fund_rate(self, symbol, pageSize=20, pageNo=1, nextPage=False):
@@ -234,7 +235,7 @@ class Client(object):
             params["nextPage"] = nextPage
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/history-fundRate', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_current_fund_rate(self, symbol):
@@ -249,7 +250,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/current-fundRate', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_open_interest(self, symbol):
@@ -264,7 +265,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/open-interest', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_market_price(self, symbol):
@@ -279,7 +280,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/mark-price', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_leverage(self, symbol):
@@ -294,7 +295,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/symbol-leverage', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     """ --- MIX-AccountApi """
@@ -311,7 +312,7 @@ class Client(object):
             params['marginCoin'] = marginCoin
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/account', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_accounts(self, productType):
@@ -325,7 +326,7 @@ class Client(object):
             params['productType'] = productType
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/accounts', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_sub_account_contract_assets(self, productType):
@@ -340,7 +341,7 @@ class Client(object):
             params['productType'] = productType
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/sub-account-contract-assets', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_open_count(self, symbol, marginCoin, openPrice, openAmount, leverage=20):
@@ -359,7 +360,7 @@ class Client(object):
             params["leverage"] = leverage
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/open-count', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_adjust_leverage(self, symbol, marginCoin, leverage, holdSide=None):
@@ -379,7 +380,7 @@ class Client(object):
                 params["holdSide"] = holdSide
             return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setLeverage', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_adjust_margin(self, symbol, marginCoin, amount, holdSide=None):
@@ -397,7 +398,7 @@ class Client(object):
                 params["holdSide"] = holdSide
             return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setMargin', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_adjust_margintype(self, symbol, marginCoin, marginMode):
@@ -414,7 +415,7 @@ class Client(object):
 
             return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setMarginMode', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_adjust_hold_mode(self, productType, holdMode):
@@ -429,7 +430,7 @@ class Client(object):
             params["holdMode"] = holdMode
             return self._request_with_params(POST, MIX_ACCOUNT_V1_URL + '/setPositionMode', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_single_position(self, symbol, marginCoin=None):
@@ -450,7 +451,7 @@ class Client(object):
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_POSITION_V1_URL + '/singlePosition', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_all_positions(self, productType, marginCoin=None):
@@ -471,7 +472,7 @@ class Client(object):
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_POSITION_V1_URL + '/allPosition', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_accountBill(self, symbol, marginCoin, startTime, endTime, lastEndId='', pageSize=20, next=False):
@@ -492,7 +493,7 @@ class Client(object):
             params['next'] = next
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/accountBill', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_accountBusinessBill(self, productType, startTime, endTime, lastEndId='', pageSize=20, next=False):
@@ -512,7 +513,7 @@ class Client(object):
             params['next'] = next
             return self._request_with_params(GET, MIX_ACCOUNT_V1_URL + '/accountBusinessBill', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     """ --- MIX-tradeApi """
@@ -553,7 +554,7 @@ class Client(object):
             params["presetStopLossPrice"] = presetStopLossPrice
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/placeOrder', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_reversal(self, symbol, marginCoin, side, orderType,
@@ -581,7 +582,7 @@ class Client(object):
             params["reverse"] = reverse
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/placeOrder', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_batch_orders(self, symbol, marginCoin, orderDataList):
@@ -598,7 +599,7 @@ class Client(object):
             params["orderDataList"] = orderDataList
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/batch-orders', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cancel_order(self, symbol, marginCoin, orderId):
@@ -614,7 +615,7 @@ class Client(object):
             params["orderId"] = orderId
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-order', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_batch_cancel_orders(self, symbol, marginCoin, orderIds):
@@ -630,7 +631,7 @@ class Client(object):
             params["orderIds"] = orderIds
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-batch-orders', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cancel_all_orders(self, productType, marginCoin):
@@ -646,7 +647,7 @@ class Client(object):
             params["marginCoin"] = marginCoin
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-all-orders', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_open_order(self, symbol):
@@ -660,7 +661,7 @@ class Client(object):
             params["symbol"] = symbol
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/current', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_all_open_orders(self, productType, marginCoin=None):
@@ -676,7 +677,7 @@ class Client(object):
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/marginCoinCurrent', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_history_orders(self, symbol, startTime, endTime, pageSize, lastEndId='', isPre=False):
@@ -711,7 +712,7 @@ class Client(object):
             params["isPre"] = isPre
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/history', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_productType_history_orders(self, productType, startTime, endTime, pageSize, lastEndId='', isPre=False):
@@ -746,7 +747,7 @@ class Client(object):
             params["isPre"] = isPre
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/historyProductType', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_order_details(self, symbol, orderId=None, clientOrderId=None):
@@ -762,10 +763,10 @@ class Client(object):
             if orderId is not None:
                 params["orderId"] = orderId
             if clientOrderId is not None:
-                params["clientOrderId"] = orderId
+                params["clientOid"] = clientOrderId
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/detail', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_order_fill_detail(self, symbol, orderId=None, startTime=None, endTime=None, lastEndId=None):
@@ -788,7 +789,7 @@ class Client(object):
                 params["lastEndId"] = lastEndId
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/fills', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_productType_order_fill_detail(self, productType, startTime=None, endTime=None, lastEndId=None):
@@ -809,7 +810,7 @@ class Client(object):
                 params["lastEndId"] = lastEndId
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/allFills', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_place_plan_order(self, symbol, marginCoin, size, side, orderType, triggerPrice, triggerType
@@ -840,7 +841,7 @@ class Client(object):
                 params["presetStopLossPrice"] = presetStopLossPrice
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placePlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_modify_plan_order(self, symbol, marginCoin, orderId, orderType, triggerPrice, triggerType
@@ -864,7 +865,7 @@ class Client(object):
                 params["executePrice"] = executePrice
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_modify_plan_order_tpsl(self, symbol, marginCoin, orderId
@@ -887,7 +888,7 @@ class Client(object):
                 params["presetStopLossPrice"] = presetStopLossPrice
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyPlanPreset', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_place_stop_order(self, symbol, marginCoin, triggerPrice, planType, holdSide,
@@ -913,7 +914,7 @@ class Client(object):
                 params["rangeRate"] = rangeRate
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placeTPSL', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_place_trailing_stop_order(self, symbol, marginCoin, triggerPrice, side,
@@ -939,7 +940,7 @@ class Client(object):
                 params["rangeRate"] = rangeRate
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placeTrailStop', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_place_PositionsTPSL(self, symbol, marginCoin, planType, triggerPrice, triggerType, holdSide=None):
@@ -961,7 +962,7 @@ class Client(object):
                 params["holdSide"] = holdSide
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/placePositionsTPSL', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_modify_stop_order(self, symbol, marginCoin, orderId, triggerPrice, planType=None):
@@ -979,7 +980,7 @@ class Client(object):
                 params["planType"] = planType
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyTPSLPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cancel_plan_order(self, symbol, marginCoin, orderId, planType):
@@ -996,7 +997,7 @@ class Client(object):
             params["planType"] = planType
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cancel_all_trigger_orders(self, productType, planType):
@@ -1011,7 +1012,7 @@ class Client(object):
             params["planType"] = planType
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelAllPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_plan_order_tpsl(self, symbol=None, productType=None, isPlan=None):
@@ -1034,7 +1035,7 @@ class Client(object):
                 params["isPlan"] = isPlan
             return self._request_with_params(GET, MIX_PLAN_V1_URL + '/currentPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_history_plan_orders(self, symbol, startTime, endTime, pageSize=100, lastEndId=None, isPre=False, isPlan=None):
@@ -1057,7 +1058,7 @@ class Client(object):
                 params["isPlan"] = isPlan
             return self._request_with_params(GET, MIX_PLAN_V1_URL + '/historyPlan', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     """ --- MIX-CopyTradeApi """
@@ -1079,7 +1080,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/currentTrack', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_follower_open_orders(self, symbol, productType, pageSize=20, pageNo=1):
@@ -1097,7 +1098,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/followerOrder', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_follower_history_orders(self, startTime, endTime, pageSize=20, pageNo=1):
@@ -1115,7 +1116,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/followerHistoryOrders', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cp_close_position(self, symbol, trackingNo):
@@ -1131,7 +1132,7 @@ class Client(object):
             params["trackingNo"] = trackingNo
             return self._request_with_params(POST, MIX_TRACE_V1_URL + '/closeTrackOrder', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_cp_modify_tpsl(self, symbol, trackingNo, stopProfitPrice=0, stopLossPrice=0):
@@ -1151,7 +1152,7 @@ class Client(object):
                 params["stopLossPrice"] = stopLossPrice
             return self._request_with_params(POST, MIX_TRACE_V1_URL + '/modifyTPSL', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_history_orders(self, startTime, endTime, pageSize=20, pageNo=1):
@@ -1169,7 +1170,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/historyTrack', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_profit_summary(self):
@@ -1217,7 +1218,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/profitDateList', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_wait_profit_detail(self, pageSize=20, pageNo=1):
@@ -1234,7 +1235,7 @@ class Client(object):
             params["pageNo"] = pageNo
             return self._request_with_params(GET, MIX_TRACE_V1_URL + '/waitProfitDateList', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
 
     def mix_get_cp_symbols(self):
@@ -1259,6 +1260,709 @@ class Client(object):
             params["operation"] = operation
             return self._request_with_params(POST, MIX_TRACE_V1_URL + '/setUpCopySymbols', params)
         else:
-            logger.debug("pls check args")
+            logger.error("pls check args")
             return False
-        
+
+    """ Bitget-Spot-Endpoints"""
+    """ Spot-PublicApi"""
+
+    def spot_get_server_time(self):
+        """
+        Get Server Time: https://bitgetlimited.github.io/apidoc/en/spot/#get-server-time
+        Rate Limit: 20 times/1s (IP)
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_PUBLIC_V1_URL + '/time')
+
+    def spot_get_coin_list(self):
+        """
+        Get Coin List: https://bitgetlimited.github.io/apidoc/en/spot/#get-coin-list
+        Rate Limit: 3 times/1s (IP)
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_PUBLIC_V1_URL + '/currencies')
+
+    def spot_get_symbols(self):
+        """
+        Get Symbols: https://bitgetlimited.github.io/apidoc/en/spot/#get-symbols
+        Rate Limit: 20 times/1s (IP)
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_PUBLIC_V1_URL + '/products')
+
+    def spot_get_symbol(self, symbol):
+        """
+        Get Single Symbol: https://bitgetlimited.github.io/apidoc/en/spot/#get-single-symbol
+        Rate Limit: 20 times/1s (IP)
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, SPOT_PUBLIC_V1_URL + '/product', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    """ Spot-MarketApi"""
+
+    def spot_get_tickers(self):
+        """
+        Get All Tickers: https://bitgetlimited.github.io/apidoc/en/spot/#get-all-tickers
+
+        Rate Limit: 20 times/1s (IP)
+
+        Get all transaction pair ticker information
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_MARKET_V1_URL + '/tickers')
+
+    def spot_get_ticker(self, symbol):
+        """
+        Get Single Ticker: https://bitgetlimited.github.io/apidoc/en/spot/#get-single-ticker
+
+        Rate Limit: 20 times/1s (IP)
+
+        Get ticker information according to the currency pair
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            return self._request_with_params(GET, SPOT_MARKET_V1_URL + '/ticker', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_market_trades(self, symbol, limit=100):
+        """
+        Get Market Trades: https://bitgetlimited.github.io/apidoc/en/spot/#get-market-trades
+
+        Rate Limit: 20 times/1s (IP)
+
+        Get real-time transaction
+        :return:
+        """
+        params = {}
+        if symbol and limit:
+            params["symbol"] = symbol
+            params["limit"] = limit
+            return self._request_with_params(GET, SPOT_MARKET_V1_URL + '/fills', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_candle_data(self, symbol, period, after='', before='', limit=100):
+        """
+        Get Candle Data: https://bitgetlimited.github.io/apidoc/en/spot/#get-candle-data
+
+        Rate Limit: 20 times/1s (IP)
+
+        Obtain K line information
+
+        period: 1min, 5min, 15min, 30min, 1h,4h,12h, 1day, 1week
+
+        after: Time after, milliseconds
+
+        before: Time before, milliseconds
+        :return:
+        """
+        params = {}
+        if symbol and period:
+            params["symbol"] = symbol
+            params["period"] = period
+            params["after"] = after
+            params["before"] = before
+            params["limit"] = limit
+            return self._request_with_params(GET, SPOT_MARKET_V1_URL + '/candles', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_depth(self, symbol, limit='150', type='step0'):
+        """
+        Get Depth: https://bitgetlimited.github.io/apidoc/en/spot/#get-depth
+
+        Rate Limit: 20 times/1s (IP)
+
+        Get depth data
+
+        Depth Merge Type
+
+        type: step0(default) step1 step2 step3 step4 step5
+        :return:
+        """
+        params = {}
+        if symbol and limit and type:
+            params["symbol"] = symbol
+            params["limit"] = limit
+            params["type"] = type
+            return self._request_with_params(GET, SPOT_MARKET_V1_URL + '/depth', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    """ Spot-WalletApi"""
+
+    def spot_transfer(self, fromType, toType, amount, coin, clientOrderId=None):
+        """
+        Transfer: https://bitgetlimited.github.io/apidoc/en/spot/#transfer
+
+        fromType： spot, mix_usdt, mix_usd
+
+        toType: spot, mix_usdt, mix_usd
+
+        amount: transfer amount
+
+        coin: crypto currency
+        :return:
+        """
+        params = {}
+        if fromType and toType and amount and coin:
+            params["fromType"] = fromType
+            params["toType"] = toType
+            params["amount"] = amount
+            params["coin"] = coin
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            return self._request_with_params(POST, SPOT_WALLET_V1_URL + '/transfer', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_sub_transfer(self, fromType, toType, amount, coin, clientOrderId, fromUserId, toUserId):
+        """
+        Sub Transfer: https://bitgetlimited.github.io/apidoc/en/spot/#sub-transfer
+        Rate Limit：2/sec (uid)
+
+        :return:
+        """
+        params = {}
+        if fromType and toType and amount and coin and fromUserId and toUserId:
+            params["fromType"] = fromType
+            params["toType"] = toType
+            params["amount"] = amount
+            params["coin"] = coin
+            params["clientOid"] = clientOrderId
+            params["fromUserId"] = fromUserId
+            params["toUserId"] = toUserId
+            return self._request_with_params(POST, SPOT_WALLET_V1_URL + '/subTransfer', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_depositAddress(self, coin, chain):
+        """
+        Get Coin Address: https://bitgetlimited.github.io/apidoc/en/spot/#get-coin-address
+
+        Rate Limit：5/sec (uid)
+
+        GET deposit address
+
+        coin： btc usdt
+
+        chain: trc20  erc20
+
+        :return:
+        """
+        params = {}
+        if coin and chain:
+            params["coin"] = coin
+            params["chain"] = chain
+            return self._request_with_params(GET, SPOT_WALLET_V1_URL + '/deposit-address', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_withdrawal(self, coin, address, chain, amount, remark='', clientOrderId=None, tag=None):
+        """
+        Withdraw: https://bitgetlimited.github.io/apidoc/en/spot/#withdraw
+
+        Just withdraw coins on the chain
+
+        Rate Limit:5/sec (Uid)
+
+        :return:
+        """
+        params = {}
+        if coin:
+            params["coin"] = coin
+            params["address"] = address
+            params["chain"] = chain
+            params["amount"] = amount
+            params["remark"] = remark
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            if tag is not None:
+                params["tag"] = tag
+            return self._request_with_params(POST, SPOT_WALLET_V1_URL + '/withdrawal', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_withdrawal_inner(self, coin, toUid, amount, clientOrderId=None):
+        """
+        Inner Withdraw: https://bitgetlimited.github.io/apidoc/en/spot/#inner-withdraw
+
+        Internal withdrawal means that both users are on the Bitget platform
+
+        Withdraw money directly in the form of uid, without going on the chain, no need to pass the address
+
+        Rate Limit: 5/sec (Uid)
+
+        :return:
+        """
+        params = {}
+        if coin and toUid and amount:
+            params["coin"] = coin
+            params["amount"] = amount
+            params["toUid"] = toUid
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            return self._request_with_params(POST, SPOT_WALLET_V1_URL + '/withdrawal-inner', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_withdrawalList(self, coin, startTime, endTime, pageSize=20, pageNo=1):
+        """
+        Get Withdraw list: https://bitgetlimited.github.io/apidoc/en/spot/#get-withdraw-list
+
+        Rate Limit：20/1s (Uid)
+
+        :return:
+        """
+        params = {}
+        if coin and startTime and endTime:
+            params["coin"] = coin
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageNo"] = pageNo
+            params["pageSize"] = pageSize
+            return self._request_with_params(GET, SPOT_WALLET_V1_URL + '/withdrawal-list', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_depositList(self, coin, startTime, endTime, pageSize=20, pageNo=1):
+        """
+        Get Deposit List: https://bitgetlimited.github.io/apidoc/en/spot/#get-deposit-list
+
+        Rate Limit：20/1s (Uid)
+
+        :return:
+        """
+        params = {}
+        if coin and startTime and endTime:
+            params["coin"] = coin
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageNo"] = pageNo
+            params["pageSize"] = pageSize
+            return self._request_with_params(GET, SPOT_WALLET_V1_URL + '/deposit-list', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    """ Spot-AccountApi"""
+
+    def spot_get_ApiKeyInfo(self):
+        """
+        Get ApiKey Info: https://bitgetlimited.github.io/apidoc/en/spot/#get-apikey-info
+
+        Rate Limit: 1/sec (Uid)
+
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_ACCOUNT_V1_URL + '/getInfo')
+
+    def spot_get_account_assets(self, coin=None):
+        """
+        Get Account Assets: https://bitgetlimited.github.io/apidoc/en/spot/#get-account-assets
+
+        Rate Limit: 10 times/1s (uid)
+
+        Obtain all asset currency information of the user
+
+        :return:
+        """
+        params = {}
+        if coin is not None:
+            params["coin"] = coin
+        return self._request_with_params(GET, SPOT_ACCOUNT_V1_URL + '/assets', params)
+
+    def spot_get_sub_account_assets(self):
+        """
+        Get sub Account Spot Assets: https://bitgetlimited.github.io/apidoc/en/spot/#get-sub-account-spot-assets
+
+        Rate Limit: 1 times/10s (uid)
+
+        ***Warning*** This endpoint's worked on POST, but the Request Example is GET.
+
+        Why this endpoint name is "Get sub Account Spot Assets", but it's used POST ?!!
+
+        :return:
+        """
+        if self.verbose:
+            logger.warning("***Warning*** This endpoint's worked on POST")
+        return self._request_without_params(POST, SPOT_ACCOUNT_V1_URL + '/sub-account-spot-assets')
+
+    def spot_get_bills(self, coinId='', groupType='', bizType='', after='', before='', limit=100):
+        """
+        Get Bills: https://bitgetlimited.github.io/apidoc/en/spot/#get-bills
+
+        Rate Limit: 10 times/1s (uid)
+
+        Obtain all asset currency information of the user
+
+        groupType: Deposit, withdraw, transaction, transfer, other
+
+        bizType：Dispose, withdraw, buy, sell, transfer in, transfer out
+
+        after: Pass in billId, the data before this billId
+
+        before: Incoming billId data after this billId
+
+        :return:
+        """
+        params = {}
+
+        if coinId:
+            params["coinId"] = coinId
+        if groupType:
+            params["groupType"] = groupType
+        if bizType:
+            params["bizType"] = bizType
+        if after:
+            params["after"] = after
+        if before:
+            params["before"] = before
+
+        params["limit"] = limit
+        return self._request_with_params(POST, SPOT_ACCOUNT_V1_URL + '/bills', params)
+
+    def spot_get_transfer_list(self, coinId='', fromType='', after='', before='', limit=100):
+        """
+        Get Transfer List: https://bitgetlimited.github.io/apidoc/en/spot/#get-transfer-list
+
+        Rate Limit: 20 times/1s (uid)
+
+        query transfer records
+
+        fromType: exchange(spot)   USD_MIX(coin future) USDT_MIX(usdt future)
+
+        :return:
+        """
+        params = {}
+
+        if coinId:
+            params["coinId"] = coinId
+        if fromType:
+            params["fromType"] = fromType
+        if after:
+            params["after"] = after
+        if before:
+            params["before"] = before
+
+        params["limit"] = limit
+        return self._request_with_params(GET, SPOT_ACCOUNT_V1_URL + '/transferRecords', params)
+
+    """ Spot-TradeApi"""
+
+    def spot_place_order(self, symbol, quantity, side, orderType, force, price='', clientOrderId=None):
+        """
+        Place order: https://bitgetlimited.github.io/apidoc/en/spot/#place-order
+
+        Rate Limit: 10/sec (uid)
+
+        price: Mandatory in case of price limit
+
+        quantity: It is quantity when the price is limited. The market price is the limit. The sales is the quantity
+
+        side：buy sell
+
+        orderType: limit(fixed price)  market(market price)
+
+        force:normal(Ordinary price limit order)   postOnly(It is only a maker.
+
+        The market price is not allowed to use this)  ioc(Close immediately and cancel the remaining)  fok(Complete transaction or immediate cancellation)
+
+        :return:
+        """
+        params = {}
+
+        if symbol and quantity and side and orderType and force:
+            params["symbol"] = symbol
+            params["price"] = price
+            params["quantity"] = quantity
+            params["side"] = side
+            params["orderType"] = orderType
+            params["force"] = force
+            if clientOrderId is not None:
+                params["clientOrderId"] = clientOrderId
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/orders', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_place_batch_orders(self, symbol, orderList):
+        """
+        Batch order: https://bitgetlimited.github.io/apidoc/en/spot/#batch-order
+
+        Rate Limit: 5/sec (uid)
+
+        Place orders in batches
+
+        :return:
+        """
+
+        if symbol and orderList:
+            params = {'symbol': symbol, 'orderList': orderList}
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + "/batch-orders", params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_cance_order(self, symbol, orderId):
+        """
+        Cancel order: https://bitgetlimited.github.io/apidoc/en/spot/#cancel-order
+
+        Rate Limit: 10 times/sec (uid)
+
+        :return:
+        """
+        params = {}
+
+        if symbol and orderId:
+            params["symbol"] = symbol
+            params["orderId"] = orderId
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/cancel-order', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_cancel_batch_orders(self, symbol, orderIds):
+        """
+        Cancel order in batch (single instruments): https://bitgetlimited.github.io/apidoc/en/spot/#cancel-order-in-batch-single-instruments
+
+        Rate Limit: 5 times/1s (uid)
+
+        Batch cancellation
+
+        :return:
+        """
+
+        if symbol and orderIds:
+            params = {'symbol': symbol, 'orderIds': orderIds}
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + "/cancel-batch-orders", params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_order_details(self, symbol, orderId, clientOrderId=None):
+        """
+        Get order details:https://bitgetlimited.github.io/apidoc/en/spot/#get-order-details
+
+        Rate Limit: 20 times/sec(uid)
+
+        User could query cancelled/filled order details within 24 hours; Noted that after 24 hours should query via history interface.
+        :return:
+        """
+        params = {}
+        if symbol and orderId:
+            params["symbol"] = symbol
+            params["orderId"] = orderId
+            if clientOrderId is not None:
+                params["clientOrderId"] = clientOrderId
+
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/orderInfo', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_open_orders(self, symbol=''):
+        """
+        Get order List: https://bitgetlimited.github.io/apidoc/en/spot/#get-order-list
+
+        Rate Limit: 20 times/sec(uid)
+
+        :return:
+        """
+        params = {"symbol": symbol}
+        if self.verbose:
+            logger.warning("***Warning*** This endpoint's worked on POST")
+
+        return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/open-orders', params)
+
+    def spot_get_order_history(self, symbol, after='', before='', limit=100):
+        """
+        Get order history: https://bitgetlimited.github.io/apidoc/en/spot/#get-order-history
+
+        Rate Limit: 20 times/sec(uid)
+
+        Get Historical Delegation
+        after: The orderId is passed in. The data before the orderId desc
+
+        before: Pass in the data after the orderId asc
+
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["after"] = after
+            params["before"] = before
+            params["limit"] = limit
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/history', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_transaction_details(self, symbol='', orderId='', after='', before='', limit=100):
+        """
+        Get transaction details: https://bitgetlimited.github.io/apidoc/en/spot/#get-transaction-details
+
+        Rate Limit: 20 times/sec(uid)
+
+        Obtain transaction details
+
+        after: Only the data before the fillId can be passed in
+
+        before: Only data passing in the fillId after this fillId is supported
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["orderId"] = orderId
+            params["after"] = after
+            params["before"] = before
+            params["limit"] = limit
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+
+            return self._request_with_params(POST, SPOT_ORDER_V1_URL + '/fills', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_place_plan_order(self, symbol, side, triggerPrice, size, triggerType, orderType,
+                              executePrice=None, timeInForceValue=None, clientOrderId=None):
+        """
+        Place plan order: https://bitgetlimited.github.io/apidoc/en/spot/#place-plan-order
+
+        Rate Limit: 20 times/sec (uid)
+
+        Required: symbol, side, triggerPrice, size, triggerType, orderType
+
+        :return:
+        """
+        params = {}
+
+        if symbol and side and triggerPrice and size and triggerType:
+            params["symbol"] = symbol
+            params["side"] = side
+            params["triggerPrice"] = triggerPrice
+            params["size"] = size
+            params["triggerType"] = triggerType
+            params["orderType"] = orderType
+            if clientOrderId is not None:
+                params["clientOid"] = clientOrderId
+            if executePrice is not None:
+                params["executePrice"] = executePrice
+            if timeInForceValue is not None:
+                params["timeInForceValue"] = timeInForceValue
+            return self._request_with_params(POST, SPOT_PLAN_V1_URL + '/placePlan', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_modify_plan_order(self, orderId, orderType, triggerPrice,
+                               size=None, executePrice=None):
+        """
+        Modify Plan Order: https://bitgetlimited.github.io/apidoc/en/spot/#modify-plan-order
+        Limit rule: 20 times/sec (uid)
+
+        Required: orderId, orderType, triggerPrice
+        :return:
+        """
+        params = {}
+        if orderId and orderType and triggerPrice:
+            params["orderId"] = orderId
+            params["orderType"] = orderType
+            params["triggerPrice"] = triggerPrice
+            if executePrice is not None:
+                params["executePrice"] = executePrice
+            if size is not None:
+                params["size"] = size
+            return self._request_with_params(POST, SPOT_PLAN_V1_URL + '/modifyPlan', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_cancel_plan_order(self, orderId):
+        """
+        Cancel plan order: https://bitgetlimited.github.io/apidoc/en/spot/#cancel-plan-order
+        Required: orderId
+        Limit rule: 20 times/sec (uid)
+        """
+        params = {}
+        if orderId:
+            params["orderId"] = orderId
+            return self._request_with_params(POST, MIX_PLAN_V1_URL + '/cancelPlan', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_plan_orders(self, symbol, pageSize=20, lastEndId=''):
+        """
+        Get current plan orders: https://bitgetlimited.github.io/apidoc/en/spot/#get-current-plan-orders
+
+        Rate Limit: 20 times/sec(uid)
+
+        :return:
+        """
+        params = {}
+        if symbol:
+            params["symbol"] = symbol
+            params["pageSize"] = pageSize
+            params["lastEndId"] = lastEndId
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+
+            return self._request_with_params(POST, SPOT_PLAN_V1_URL + '/currentPlan', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    def spot_get_history_plan_orders(self, symbol, startTime, endTime, pageSize=20, lastEndId=''):
+        """
+        Get history plan orders: https://bitgetlimited.github.io/apidoc/en/spot/#get-history-plan-orders
+
+        Rate Limit: 20 times/sec(uid)
+
+        :return:
+        """
+        params = {}
+        if symbol and startTime and endTime:
+            params["symbol"] = symbol
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["pageSize"] = pageSize
+            params["lastEndId"] = lastEndId
+            if self.verbose:
+                logger.warning("***Warning*** This endpoint's worked on POST")
+
+            return self._request_with_params(POST, SPOT_PLAN_V1_URL + '/historyPlan', params)
+        else:
+            logger.error("pls check args")
+            return False
+
+    """ Broker-Sub-Account-Interface"""
+    """ Broker-Sub-API-Interface"""

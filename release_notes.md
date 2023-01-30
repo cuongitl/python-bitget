@@ -5,6 +5,8 @@ python wrapper with rest API, websocket API.
 
 
 # Release notes
+* Version 1.0.4 - 30 Jan 2023.
+  * Full support for all spot-endpoints.
 * Version 1.0.3 - 29 Jan 2023.
   * Full support for all mix-endpoints.
 * Version 1.0.2 - 29 Jan 2023.
