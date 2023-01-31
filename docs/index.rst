@@ -11,8 +11,9 @@ Contents:
    :maxdepth: 3
 
    overview
+   spot
    mix
-
+   broker
 
 
 Indices and tables

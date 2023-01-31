@@ -63,6 +63,8 @@ Some calls have a higher weight than others especially if a call returns informa
 Read the `official bitget documentation <https://bitgetlimited.github.io/apidoc/en/mix/#welcome>`_ for specific information.
 
 
+Examples
+--------------
 Here are examples to access these
 
 restAPI example
