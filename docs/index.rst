@@ -10,8 +10,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   README
-   release_notes
+   overview
 
 
 
