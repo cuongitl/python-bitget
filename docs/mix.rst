@@ -158,3 +158,232 @@ Account
 
     data = client.mix_get_accountBusinessBill(productType, startTime, endTime, lastEndId='', pageSize=20, next=False)
 
+Trade
+------------
+
+`Place Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_place_order(symbol, marginCoin, size, side, orderType,
+                        price='', clientOrderId=None, reduceOnly=False,
+                        timeInForceValue='normal', presetTakeProfitPrice='', presetStopLossPrice='')
+
+`Reversal <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_reversal(symbol, marginCoin, side, orderType,
+                     size=None, clientOrderId=None, timeInForceValue='normal', reverse=False)
+
+`Batch Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_batch_orders(symbol, marginCoin, orderDataList)
+
+`Cancel Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cancel_order(symbol, marginCoin, orderId)
+
+`Batch Cancel Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_batch_cancel_orders(symbol, marginCoin, orderIds)
+
+`Cancel All Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cancel_all_orders(productType, marginCoin)
+
+`Get Open Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_open_order(symbol)
+
+`Get All Open Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_all_open_orders(productType, marginCoin=None)
+
+`Get History Orders <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_history_orders(symbol, startTime, endTime, pageSize, lastEndId='', isPre=False)
+
+`Get ProductType History Orders <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_productType_history_orders(productType, startTime, endTime, pageSize, lastEndId='', isPre=False)
+
+`Get Order Details <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_order_details(symbol, orderId=None, clientOrderId=None)
+
+`Get Order fill detail <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_order_fill_detail(symbol, orderId=None, startTime=None, endTime=None, lastEndId=None)
+
+`Get ProductType Order fill detail <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_productType_order_fill_detail(productType, startTime=None, endTime=None, lastEndId=None)
+
+`Place Plan order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_place_plan_order(symbol, marginCoin, size, side, orderType, triggerPrice, triggerType
+                             , executePrice=None, clientOrderId=None, presetTakeProfitPrice=None, presetStopLossPrice=None, reduceOnly=False)
+
+`Modify Plan Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_modify_plan_order(symbol, marginCoin, orderId, orderType, triggerPrice, triggerType
+                              , executePrice=None)
+
+`Modify Plan Order TPSL <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_modify_plan_order_tpsl(symbol, marginCoin, orderId
+                                   , presetTakeProfitPrice=None, presetStopLossPrice=None)
+
+`Place Stop Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_place_stop_order(symbol, marginCoin, triggerPrice, planType, holdSide,
+                             triggerType='fill_price', size=None, rangeRate=None)
+
+`Place Trailing Stop Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_place_trailing_stop_order(symbol, marginCoin, triggerPrice, side,
+                                      triggerType=None, size=None, rangeRate=None)
+
+`Place Position TPSL <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_place_PositionsTPSL(symbol, marginCoin, planType, triggerPrice, triggerType, holdSide=None)
+
+`Modify Stop Order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_modify_stop_order(symbol, marginCoin, orderId, triggerPrice, planType)
+
+`Cancel Plan Order (TPSL) <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cancel_plan_order(symbol, marginCoin, orderId, planType)
+
+`Cancel All trigger Order (TPSL) <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cancel_all_trigger_orders(productType, planType)
+
+`Get Plan Order (TPSL) List <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_plan_order_tpsl(symbol=None, productType=None, isPlan=None)
+
+`Get History Plan Orders (TPSL) <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_history_plan_orders(symbol, startTime, endTime, pageSize=100, lastEndId=None, isPre=False, isPlan=None)
+
+CopyTrade
+------------
+
+`Get Trader Open order <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_open_order(symbol, productType, pageSize=20, pageNo=1)
+
+`Get Follower Open Orders <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_follower_open_orders(symbol, productType, pageSize=20, pageNo=1)
+
+`Trader Close Position <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cp_close_position(symbol, trackingNo)
+
+`Trader Modify TPSL <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cp_modify_tpsl(symbol, trackingNo, stopProfitPrice=None, stopLossPrice=None)
+
+`Get Traders History Orders <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_history_orders(startTime, endTime, pageSize=20, pageNo=1)
+
+`Get Trader Profit Summary <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_profit_summary()
+
+`Get Trader History Profit Summary (according to settlement currency) <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_profit_settle_margin_coin()
+
+`Get Trader History Profit Summary (according to settlement currency and date) <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_profit_date_group(pageSize=20, pageNo=1)
+
+`Get Trader History Profit Detail <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_profit_date_detail(marginCoin, date, pageSize=20, pageNo=1)
+
+`Get Trader Profits Details <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_wait_profit_detail(pageSize=20, pageNo=1)
+
+`Get CopyTrade Symbols <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_cp_symbols()
+
+`Trader Change CopyTrade symbol <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_cp_change_symbol(symbol, operation)

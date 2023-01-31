@@ -222,7 +222,7 @@ class Client(object):
 
     def mix_get_history_fund_rate(self, symbol, pageSize=20, pageNo=1, nextPage=False):
         """
-        GGet History Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate
+        Get History Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate
         Limit rule: 20 times/1s (IP)
         Required: symbol
         :return:
@@ -285,7 +285,7 @@ class Client(object):
 
     def mix_get_leverage(self, symbol):
         """
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
+        Get Symbol Leverage: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
         Limit rule: 20/sec (IP)
         Required: symbol.
 
@@ -317,7 +317,7 @@ class Client(object):
 
     def mix_get_accounts(self, productType):
         """
-        Get account information list: https://bitgetlimited.github.io/apidoc/en/mix/#get-account-list
+        Get Account List: https://bitgetlimited.github.io/apidoc/en/mix/#get-account-list
         productType: Umcbl (USDT professional contract) dmcbl (mixed contract) sumcbl (USDT professional contract simulation disk) sdmcbl (mixed contract simulation disk)
         :return:
         """
@@ -587,7 +587,7 @@ class Client(object):
 
     def mix_batch_orders(self, symbol, marginCoin, orderDataList):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#batch-order
+        Batch Order: https://bitgetlimited.github.io/apidoc/en/mix/#batch-order
         Limit rule: 10 times/1s (uid)
         Trader Limit rule: 1 times/1s (uid)
         Required: symbol, marginCoin, orderDataList
@@ -604,7 +604,7 @@ class Client(object):
 
     def mix_cancel_order(self, symbol, marginCoin, orderId):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        Cancel Order: https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
         Limit rule: 10 times/1s (uid)
         Required: symbol, marginCoin, orderId
         """
@@ -619,7 +619,7 @@ class Client(object):
             return False
 
     def mix_batch_cancel_orders(self, symbol, marginCoin, orderIds):
-        """
+        """ Batch Cancel Order
         https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
         Limit rule: 10 times/1s (uid)
         Required: symbol, marginCoin, orderIds
@@ -635,7 +635,7 @@ class Client(object):
             return False
 
     def mix_cancel_all_orders(self, productType, marginCoin):
-        """
+        """ Cancel All Order
         https://bitgetlimited.github.io/apidoc/en/mix/#cancel-all-order
         Limit rule: 10 times/1s (uid)
 
@@ -1228,8 +1228,8 @@ class Client(object):
 
     def mix_get_cp_wait_profit_detail(self, pageSize=20, pageNo=1):
         """
-        Get Trader History Profit Detail
-        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-detail
+        Get Trader Profits Details
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-profits-details
         Limit rule 20 times/1s (uid)
         Details of traders to be distributed
         :return:
