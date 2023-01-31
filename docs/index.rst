@@ -24,4 +24,4 @@ Contents:
 Index
 ==================
 
-* :ref:`index`
+* :ref:`genindex`
