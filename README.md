@@ -94,7 +94,7 @@ Donations are greatly appreciated. If you prefer to donate any other currency pl
 * **BGB**:  `0x3ee4ca7cc911ad4e423dec2ae8f2846e9a6a0a77`  (ERC-20)
 
 ## Communities
-* Telegram: [Python-bitget API](https://t.me/python_bitget)
+* Telegram: [Bitget OPENAPI](https://t.me/bitgetOpenapi)
 
 ## Release Notes
 The release notes can be found
