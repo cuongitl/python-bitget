@@ -8,9 +8,10 @@ This is a wrapper around the Bitget API as described on Bitget, including all fe
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    overview
+   mix
 
 
 
