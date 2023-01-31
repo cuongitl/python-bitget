@@ -10,8 +10,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   README.md
-   release_notes.md
+   README
+   release_notes
 
 
 
