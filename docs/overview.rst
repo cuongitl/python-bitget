@@ -31,7 +31,7 @@ Pass your API Key and Secret
     api_key = "your-api-key"
     api_secret = "your-secret-key"
     api_passphrase = "your-api-passphrase"
-    iClient = Client(api_key, api_secret, api_passphrase, use_server_time=False)
+    client = Client(api_key, api_secret, api_passphrase, use_server_time=False)
 
 
 Making API Calls
