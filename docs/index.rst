@@ -18,9 +18,10 @@ Contents:
    spot
    mix
    broker
+   websockets
 
 
-Indices and tables
+Index
 ==================
 
 * :ref:`genindex`
