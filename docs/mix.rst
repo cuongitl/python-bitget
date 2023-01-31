@@ -91,3 +91,70 @@ Account
 .. code:: python
 
     data = client.mix_get_account(symbol, marginCoin)
+
+`Get Account List <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_accounts(productType)
+
+`Get sub Account Contract Assets <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_sub_account_contract_assets(productType)
+
+`Get Open Count <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_open_count(symbol, marginCoin, openPrice, openAmount, leverage=20)
+
+`Change Leverage <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_adjust_leverage(symbol, marginCoin, leverage, holdSide=None)
+
+`Change Margin <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_adjust_margin(symbol, marginCoin, amount, holdSide=None)
+
+`Change Margin Mode <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_adjust_margintype(symbol, marginCoin, marginMode)
+
+`Change Hold Mode <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_adjust_hold_mode(productType, holdMode)
+
+`Get Symbol Position <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_single_position(symbol, marginCoin=None)
+
+`Get All Position <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_all_positions(productType, marginCoin=None)
+
+`Get Account Bill <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_accountBill(symbol, marginCoin, startTime, endTime, lastEndId='', pageSize=20, next=False)
+
+`Get Business Account Bill <#>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: python
+
+    data = client.mix_get_accountBusinessBill(productType, startTime, endTime, lastEndId='', pageSize=20, next=False)
+
