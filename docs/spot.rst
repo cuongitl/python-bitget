@@ -28,7 +28,7 @@ Public
 
     data = client.spot_get_symbol()
 
-Public
+Market
 ------------
 
 `Get Single Ticker <#>`_
