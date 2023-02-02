@@ -185,6 +185,9 @@ class Client(object):
         params = {}
         if symbol and granularity and startTime and endTime:
             params["symbol"] = symbol
+            params["granularity"] = granularity
+            params["startTime"] = startTime
+            params["endTime"] = endTime
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/candles', params)
         else:
             logger.error("pls check args")
@@ -222,7 +225,7 @@ class Client(object):
 
     def mix_get_history_fund_rate(self, symbol, pageSize=20, pageNo=1, nextPage=False):
         """
-        GGet History Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate
+        Get History Funding Rate: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-funding-rate
         Limit rule: 20 times/1s (IP)
         Required: symbol
         :return:
@@ -285,7 +288,7 @@ class Client(object):
 
     def mix_get_leverage(self, symbol):
         """
-        Docs: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
+        Get Symbol Leverage: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-leverage
         Limit rule: 20/sec (IP)
         Required: symbol.
 
@@ -317,7 +320,7 @@ class Client(object):
 
     def mix_get_accounts(self, productType):
         """
-        Get account information list: https://bitgetlimited.github.io/apidoc/en/mix/#get-account-list
+        Get Account List: https://bitgetlimited.github.io/apidoc/en/mix/#get-account-list
         productType: Umcbl (USDT professional contract) dmcbl (mixed contract) sumcbl (USDT professional contract simulation disk) sdmcbl (mixed contract simulation disk)
         :return:
         """
@@ -587,7 +590,7 @@ class Client(object):
 
     def mix_batch_orders(self, symbol, marginCoin, orderDataList):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#batch-order
+        Batch Order: https://bitgetlimited.github.io/apidoc/en/mix/#batch-order
         Limit rule: 10 times/1s (uid)
         Trader Limit rule: 1 times/1s (uid)
         Required: symbol, marginCoin, orderDataList
@@ -604,7 +607,7 @@ class Client(object):
 
     def mix_cancel_order(self, symbol, marginCoin, orderId):
         """
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        Cancel Order: https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
         Limit rule: 10 times/1s (uid)
         Required: symbol, marginCoin, orderId
         """
@@ -619,7 +622,7 @@ class Client(object):
             return False
 
     def mix_batch_cancel_orders(self, symbol, marginCoin, orderIds):
-        """
+        """ Batch Cancel Order
         https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
         Limit rule: 10 times/1s (uid)
         Required: symbol, marginCoin, orderIds
@@ -635,7 +638,7 @@ class Client(object):
             return False
 
     def mix_cancel_all_orders(self, productType, marginCoin):
-        """
+        """ Cancel All Order
         https://bitgetlimited.github.io/apidoc/en/mix/#cancel-all-order
         Limit rule: 10 times/1s (uid)
 
@@ -1228,8 +1231,8 @@ class Client(object):
 
     def mix_get_cp_wait_profit_detail(self, pageSize=20, pageNo=1):
         """
-        Get Trader History Profit Detail
-        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-history-profit-detail
+        Get Trader Profits Details
+        https://bitgetlimited.github.io/apidoc/en/mix/#get-trader-profits-details
         Limit rule 20 times/1s (uid)
         Details of traders to be distributed
         :return:
@@ -2033,11 +2036,13 @@ class Client(object):
     """ Broker-Sub-Account-Interface"""
 
     def broker_get_info(self):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-broker-info """
+        """ Get Broker Info
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-broker-info """
         return self._request_without_params(GET, BROKER_ACCOUNT_V1_URL + '/info')
 
     def broker_sub_create(self, subName, remark=None):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#create-sub-account """
+        """ Create Sub Account
+        https://bitgetlimited.github.io/apidoc/en/broker/#create-sub-account """
         params = {}
         if subName:
             params["subName"] = subName
@@ -2049,7 +2054,8 @@ class Client(object):
             return False
 
     def broker_get_sub_list(self, pageSize=10, lastEndId=None, status=None):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-list """
+        """ Get Sub List
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-list """
         params = {}
         if pageSize:
             params["pageSize"] = pageSize
@@ -2063,7 +2069,8 @@ class Client(object):
             return False
 
     def broker_sub_modify_account(self, subUid, perm, status):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-account """
+        """ Modify Sub Account
+        https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-account """
         params = {}
         if subUid and perm and status:
             params["subUid"] = subUid
@@ -2075,7 +2082,8 @@ class Client(object):
             return False
 
     def broker_sub_modify_email(self, subUid, subEmail):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-email """
+        """ Modify Sub Email
+        https://bitgetlimited.github.io/apidoc/en/broker/#modify-sub-email """
         params = {}
         if subUid and subEmail:
             params["subUid"] = subUid
@@ -2086,7 +2094,8 @@ class Client(object):
             return False
 
     def broker_get_sub_email(self, subUid):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-email """
+        """ GET Sub Email
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-email """
         params = {}
         if subUid:
             params["subUid"] = subUid
@@ -2096,7 +2105,8 @@ class Client(object):
             return False
 
     def broker_get_sub_spot_assets(self, subUid):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-spot-assets """
+        """ Get Sub Spot Assets
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-spot-assets """
         params = {}
         if subUid:
             params["subUid"] = subUid
@@ -2106,7 +2116,8 @@ class Client(object):
             return False
 
     def broker_get_sub_future_assets(self, subUid, productType):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-future-assets """
+        """ Get Sub Future Assets
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-future-assets """
         params = {}
         if subUid and productType:
             params["subUid"] = subUid
@@ -2117,7 +2128,8 @@ class Client(object):
             return False
 
     def broker_get_sub_deposit_address(self, subUid, coin, chain=None):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-deposit-address-only-broker """
+        """ Get Sub Deposit Address (Only Broker)
+        https://bitgetlimited.github.io/apidoc/en/broker/#get-sub-deposit-address-only-broker """
         params = {}
         if subUid and coin:
             params["subUid"] = subUid
@@ -2133,7 +2145,8 @@ class Client(object):
 
     def broker_sub_withdrawal(self, subUid, coin, address, chain, amount,
                               tag=None, clientOrderId=None, remark=None):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#sub-withdrawal-only-broker """
+        """ Sub Withdrawal (Only Broker)
+        https://bitgetlimited.github.io/apidoc/en/broker/#sub-withdrawal-only-broker """
         params = {}
         if subUid and coin and chain and address and amount:
             params["subUid"] = subUid
@@ -2153,7 +2166,8 @@ class Client(object):
             return False
 
     def broker_sub_auto_transfer(self, subUid, coin, toAccountType):
-        """ https://bitgetlimited.github.io/apidoc/en/broker/#sub-deposit-auto-transfer-only-broker """
+        """ Sub Deposit Auto Transfer (Only Broker)
+        https://bitgetlimited.github.io/apidoc/en/broker/#sub-deposit-auto-transfer-only-broker """
         params = {}
         if subUid and coin and toAccountType:
             params["subUid"] = subUid
