@@ -185,6 +185,9 @@ class Client(object):
         params = {}
         if symbol and granularity and startTime and endTime:
             params["symbol"] = symbol
+            params["granularity"] = granularity
+            params["startTime"] = startTime
+            params["endTime"] = endTime
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/candles', params)
         else:
             logger.error("pls check args")
