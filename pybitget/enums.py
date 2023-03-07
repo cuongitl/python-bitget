@@ -72,6 +72,10 @@ ORDER_SIDES = ['long', 'short']
 
 # orderStatus - state
 ORDER_STATUS_OP = ['new']
+ORDER_STATUS_NEW = 'new'
+ORDER_STATUS_CANCELED = 'canceled'
+ORDER_STATUS_FILLED = 'filled'
+ORDER_STATUS_FILLEDs = ['partially_filled', 'filled']
 ORDER_STATUS_TYPES = ['init', 'new', 'partially_filled', 'filled', 'canceled']
 
 # stopType
@@ -105,11 +109,12 @@ isPlan_profit_loss = "profit_loss"
 # symbolStatus
 SYMBOL_STATUS_TYPES = ['normal', 'maintain', 'off']
 
+
 PRODUCT_TYPE_UMCBL = 'umcbl'
 PRODUCT_TYPE_SUMCBL = 'sumcbl'  # demo ?
 MARGIN_COIN_USDT = 'USDT'
 MARGIN_COIN_USDC = 'USDC'
-
+MARGIN_COIN_SUSDT = 'SUSDT'  # demo?
 # Websocket planType
 WS_PLAN_TYPES = ['pl', 'tp', 'sl', 'ptp', 'psl']
 
