@@ -30,7 +30,7 @@ if __name__ == '__main__':
     channels = [SubscribeReq("mc", "ticker", "BTCUSD"), SubscribeReq("SP", "candle1W", "BTCUSDT")]
     client.subscribe(channels, on_message)
 
-    # single subscribe -     # multi subscribe  Public Channels
+    # single subscribe - Public Channels
     # channels = [SubscribeReq("mc", "ticker", "BTCUSD")]
     # client.subscribe(channels, on_message)
 
