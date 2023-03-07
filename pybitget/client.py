@@ -77,6 +77,15 @@ class Client(object):
 
     """ --- MIX-MarkettApi """
 
+    def mix_get_vip_fee_rate(self):
+        """
+        VIP fee rate: https://bitgetlimited.github.io/apidoc/en/mix/#vip-fee-rate
+        Limit rule: 10 times/1s (IP)
+        Required: None
+        :return:
+        """
+        return self._request_without_params(GET, MIX_MARKET_V1_URL + '/contract-vip-level')
+
     def mix_get_symbols_info(self, productType):
         """
         Get All symbols: https://bitgetlimited.github.io/apidoc/en/mix/#get-all-symbols
@@ -1409,6 +1418,15 @@ class Client(object):
         else:
             logger.error("pls check args")
             return False
+
+    def spot_get_vip_fee_rate(self):
+        """
+        VIP fee rate: https://bitgetlimited.github.io/apidoc/en/spot/#vip-fee-rate
+        Limit rule: 10 times/1s (IP)
+        Required: None
+        :return:
+        """
+        return self._request_without_params(GET, SPOT_MARKET_V1_URL + '/spot-vip-level')
 
     """ Spot-WalletApi"""
 
