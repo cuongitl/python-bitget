@@ -7,6 +7,7 @@
 [![python-bitget Downloads Per Day](https://img.shields.io/pypi/dd/python-bitget?logo=pypi)](https://pypi.org/project/python-bitget/)
 [![python-bitget Downloads Per Week](https://img.shields.io/pypi/dw/python-bitget?logo=pypi)](https://pypi.org/project/python-bitget/)
 [![python-bitget Downloads Per Month](https://img.shields.io/pypi/dm/python-bitget?logo=pypi)](https://pypi.org/project/python-bitget/)
+[![Downloads](https://static.pepy.tech/badge/python-bitget)](https://pypi.org/project/python-bitget/)
 
 [bitget](https://www.bitget.com/en/referral/register?from=referral&clacCode=6EKP94LE) is a cryptocurrency derivatives exchange.
 
