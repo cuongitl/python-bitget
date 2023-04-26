@@ -986,6 +986,7 @@ class Client(object):
         """
         params = {}
         if symbol and marginCoin and orderId and triggerPrice and planType:
+            params["orderId"] = orderId
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
             params["triggerPrice"] = triggerPrice
