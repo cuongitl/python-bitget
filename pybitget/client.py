@@ -654,7 +654,7 @@ class Client(object):
         Required: productType, marginCoin
         """
         params = {}
-        if productType and orderId:
+        if productType and marginCoin:
             params["productType"] = productType
             params["marginCoin"] = marginCoin
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-all-orders', params)
@@ -988,6 +988,7 @@ class Client(object):
         if symbol and marginCoin and orderId and triggerPrice and planType:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
+            params["orderId"] = orderId
             params["triggerPrice"] = triggerPrice
             params["planType"] = planType
             return self._request_with_params(POST, MIX_PLAN_V1_URL + '/modifyTPSLPlan', params)
