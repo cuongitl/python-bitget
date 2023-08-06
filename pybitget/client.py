@@ -184,7 +184,7 @@ class Client(object):
             logger.error("pls check args")
             return False
 
-    def mix_get_candles(self, symbol, granularity, startTime, endTime):
+    def mix_get_candles(self, symbol, granularity, startTime, endTime, kLineType='market', limit=100):
         """
         Get Candle Data: https://bitgetlimited.github.io/apidoc/en/mix/#get-candle-data
         Limit rule: 20 times/1s (IP)
@@ -197,6 +197,8 @@ class Client(object):
             params["granularity"] = granularity
             params["startTime"] = startTime
             params["endTime"] = endTime
+            params["kLineType"] = kLineType
+            params["limit"] = limit
             return self._request_with_params(GET, MIX_MARKET_V1_URL + '/candles', params)
         else:
             logger.error("pls check args")
@@ -614,33 +616,44 @@ class Client(object):
             logger.error("pls check args")
             return False
 
-    def mix_cancel_order(self, symbol, marginCoin, orderId):
+    def mix_cancel_order(self, symbol, marginCoin, orderId='', clientOid=''):
         """
         Cancel Order: https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
         Limit rule: 10 times/1s (uid)
-        Required: symbol, marginCoin, orderId
+        Required: symbol, marginCoin, orderId or clientOid
+        - Order Id, int64 in string format, 'orderId' or 'clientOid' must have one
+        - Client Order Id, 'orderId' or 'clientOid' must have one
         """
         params = {}
-        if symbol and marginCoin and orderId:
+        if symbol and marginCoin and (orderId != '' or clientOid != ''):
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
-            params["orderId"] = orderId
+            if orderId != '':
+                params["orderId"] = orderId
+            elif clientOid != '':
+                params["clientOid"] = clientOid
+
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-order', params)
         else:
             logger.error("pls check args")
             return False
 
-    def mix_batch_cancel_orders(self, symbol, marginCoin, orderIds):
+    def mix_batch_cancel_orders(self, symbol, marginCoin, orderId: list = None, clientOid: list = None):
         """ Batch Cancel Order
-        https://bitgetlimited.github.io/apidoc/en/mix/#cancel-order
+        https://bitgetlimited.github.io/apidoc/en/mix/#batch-cancel-order
         Limit rule: 10 times/1s (uid)
-        Required: symbol, marginCoin, orderIds
+        Required: symbol, marginCoin, orderIds or clientOids
+        - Order Id list, int64 in string format, 'orderIds' or 'clientOids' must have one
+        - Client Order Id list, 'orderIds' or 'clientOids' must have one
         """
         params = {}
         if symbol and marginCoin and orderIds:
             params["symbol"] = symbol
             params["marginCoin"] = marginCoin
-            params["orderIds"] = orderIds
+            if orderId is not None:
+                params["orderId"] = orderId
+            elif clientOid is not None:
+                params["clientOid"] = clientOid
             return self._request_with_params(POST, MIX_ORDER_V1_URL + '/cancel-batch-orders', params)
         else:
             logger.error("pls check args")
@@ -685,7 +698,7 @@ class Client(object):
         params = {}
         if productType:
             params["productType"] = productType
-            if marginCoin:
+            if marginCoin is not None:
                 params["marginCoin"] = marginCoin
             return self._request_with_params(GET, MIX_ORDER_V1_URL + '/marginCoinCurrent', params)
         else:

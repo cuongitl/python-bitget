@@ -4,7 +4,7 @@
 
 """
 
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 
 from loguru import logger
 from pybitget.client import Client

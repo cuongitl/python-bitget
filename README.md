@@ -86,16 +86,19 @@ client.subscribe(channels, on_message)
 I develop and maintain this package on my own for free in my spare time. 
 Donations are greatly appreciated. If you prefer to donate any other currency please contact me.
 
-* **BTC**:  `3LrqgdMbToh1mAD3sjhbv3oaEppXY7hkae`
+* **BTC**:  `19rvFC79eVoCMHxJ44hB3GLhiD2HHsMJoZ`
 
-* **BTC**:  `0x329a9F2b01aDA25F15eAE4C633d3bed8442c7BC6`  (BSC)
+* **BTC**:  `0xab4686635a02dff0babedddfee813d325f56cfb8`  (BEP20)
 
-* **USDT**:  `0x329a9F2b01aDA25F15eAE4C633d3bed8442c7BC6`  (BSC)
+* **USDT**:  `0xab4686635a02dff0babedddfee813d325f56cfb8`  (BEP20)
+
+* **USDT**:  `TCdyZs2mRhwYpCB5dZqiXEUoYRfiVJuq1H`  (TRC20)
 
 * **BGB**:  `0x3ee4ca7cc911ad4e423dec2ae8f2846e9a6a0a77`  (ERC-20)
 
-## Communities
-* Telegram: [Bitget OPENAPI](https://t.me/bitgetOpenapi)
+## Communities - Telegram
+* Bitget: [Bitget OPENAPI](https://t.me/bitgetOpenapi)
+* Author: [Cuongitl](https://t.me/Cuongitl)
 
 ## Release Notes
 The release notes can be found

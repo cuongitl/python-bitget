@@ -147,7 +147,7 @@ class BitgetWsClient:
         try:
             for channel in channels:
                 if channel in self.__scribe_map:
-                    del self.__scribe_map[chanel]
+                    del self.__scribe_map[channel]
 
             for channel in channels:
                 if channel in self.__all_suribe:
