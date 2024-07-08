@@ -86,6 +86,8 @@ client.subscribe(channels, on_message)
 I develop and maintain this package on my own for free in my spare time. 
 Donations are greatly appreciated. If you prefer to donate any other currency please contact me.
 
+* **Buy me a coffee:** https://buymeacoffee.com/cuongitl
+
 * **BTC**:  `19rvFC79eVoCMHxJ44hB3GLhiD2HHsMJoZ`
 
 * **BTC**:  `0xab4686635a02dff0babedddfee813d325f56cfb8`  (BEP20)

@@ -204,6 +204,25 @@ class Client(object):
             logger.error("pls check args")
             return False
 
+    def mix_get_history_candles(self, symbol, granularity, startTime, endTime, limit=100):
+        """
+        Get History Candle Data: https://bitgetlimited.github.io/apidoc/en/mix/#get-history-candle-data
+        Limit rule: 20 times/1s (IP)
+        Required: symbol, granularity, startTime, endTime
+        :return:
+        """
+        params = {}
+        if symbol and granularity and startTime and endTime:
+            params["symbol"] = symbol
+            params["granularity"] = granularity
+            params["startTime"] = startTime
+            params["endTime"] = endTime
+            params["limit"] = limit
+            return self._request_with_params(GET, MIX_MARKET_V1_URL + '/history-candles', params)
+        else:
+            logger.error("pls check args")
+            return False
+
     def mix_get_symbol_index_price(self, symbol):
         """
         Get Symbol Index Price: https://bitgetlimited.github.io/apidoc/en/mix/#get-symbol-index-price
