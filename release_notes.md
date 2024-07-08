@@ -5,6 +5,10 @@ python wrapper with rest API, websocket API.
 
 
 # Release notes
+* Version 1.0.8 - 08 July 2024.
+  * [x] [Get History Candle Data](https://bitgetlimited.github.io/apidoc/en/mix/#get-history-candle-data)
+* Version 1.0.7 - Fix bug.
+* Version 1.0.6 - Fix bug.
 * Version 1.0.5 - 02 Feb 2023.
   * Fixed bug [#5](https://github.com/cuongitl/python-bitget/issues/5)
 * Version 1.0.4 - 30 Jan 2023.
