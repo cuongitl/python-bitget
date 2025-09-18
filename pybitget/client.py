@@ -1179,6 +1179,22 @@ class Client(object):
         else:
             logger.error("pls check args")
             return False
+        
+    def mix_cp_close_all_positions(self, productType: str):
+        """
+        Trader Close All Positions: https://bitgetlimited.github.io/apidoc/en/mix/#close-all-position
+        Limit
+        Limit rule: 1 times/1s (uid)
+        Required: productType
+        :param productType: The product type for closing positions
+        :return: Response from the API
+        :raises ValueError: If productType is not provided or is empty
+        """
+        if not productType:
+            raise ValueError("Parameter `productType` is required and cannot be empty")
+        
+        params = {"productType": productType}
+        return self._request_with_params(POST, MIX_ORDER_V1_URL + '/close-all-positions', params)
 
     def mix_cp_modify_tpsl(self, symbol, trackingNo, stopProfitPrice=None, stopLossPrice=None):
         """
